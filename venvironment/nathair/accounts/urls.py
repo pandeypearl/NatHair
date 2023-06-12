@@ -5,8 +5,17 @@ from django.urls import path, include
 from . import views
 from .views import SignUpView, ActivateAccount, ProfileView
 from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    # Login and Logout
+    path('login/', auth_views.LoginView.as_view(
+        redirect_authenticated_user=True,
+        template_name='login.html'
+    ), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    # Sign up and Confirmation
     path('signup/', SignUpView.as_view(), name='signup'),
     path('acivate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
     path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
