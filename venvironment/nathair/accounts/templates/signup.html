@@ -1,6 +1,6 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Sign Up{% endblock title %}
 
 {% block content %}
 <h2>Sign Up to NatHair</h2>
@@ -9,4 +9,4 @@
     {{form.as_p}}
     <button type="submit">sign up</button>
 </form>
-{% endblock %}
+{% endblock content %}
