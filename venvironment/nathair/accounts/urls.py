@@ -3,7 +3,10 @@
 """
 from django.urls import path, include
 from . import views
-from .views import SignUpView, ActivateAccount, ProfileView
+from .views import (SignUpView, 
+                    ActivateAccount,
+                    ProfileView,
+                    HairProfileUpdateView)
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 
@@ -18,7 +21,9 @@ urlpatterns = [
     # Sign up and Confirmation
     path('signup/', SignUpView.as_view(), name='signup'),
     path('acivate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
+    # User profile
     path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
+    path('hair_profile', HairProfileUpdateView.as_view(), name='hair-profile'),
     # Change Password
     path('change-password/', auth_views.PasswordChangeView.as_view(
         template_name='change-password.html',
@@ -38,6 +43,6 @@ urlpatterns = [
         template_name='password-reset/password_reset_confirm.html'
     ), name='password_reset_confirm'),
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
-        template_name='passsword-reset/password_reset_complete.html'
+        template_name='password-reset/password_reset_complete.html'
     ), name='password_reset_complete'),
 ]

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import HairProfile
 
 #User Sign Up Form
 class SignUpForm(UserCreationForm):
@@ -30,5 +31,18 @@ class ProfileForm(forms.ModelForm):
             'last_name',
             'email',
         ]
+
+#User Hair Profile Form
+class HairProfileForm(forms.ModelForm):
+    class Meta:
+        model = HairProfile
+        fields = (
+            'user',
+            'hair_type',
+            'hair_porosity',
+            'hair_condition',
+            'hair_length',
+        )
+
 
 

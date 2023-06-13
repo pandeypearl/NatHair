@@ -2,8 +2,9 @@
     Module for account views.
 """
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.urls import  reverse_lazy
-from django.views.generic import View, CreateView, UpdateView
+from django.views.generic import View, CreateView, UpdateView, TemplateView
 from .forms import SignUpForm, ProfileForm
 from django.contrib.auth.models import User
 
@@ -15,6 +16,9 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 
 from django.contrib.auth import login
+from .forms import HairProfileForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 
@@ -90,3 +94,26 @@ class ProfileView(UpdateView):
     form_class = ProfileForm
     success_url = reverse_lazy('profile')
     template_name = 'profile.html'
+
+# User Hair Profile View
+class HairProfileUpdateView(LoginRequiredMixin, TemplateView):
+    form = HairProfileForm
+    template_name = 'hair-profile-update.html'
+
+    def post(self, request):
+
+        post_data = request.POST or None
+
+        form = HairProfileForm(post_data, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your Hair Profile Has Been Updated')
+            return HttpResponseRedirect(reverse_lazy('profile'))
+
+        context = self.get_context_data(form=form)
+
+        return self.render_to_response(context)
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
