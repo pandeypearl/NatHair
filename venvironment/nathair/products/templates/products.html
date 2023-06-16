@@ -6,8 +6,11 @@
 <ul>
     {% for product in products %}
     <li>
+        <img src="{{ product.image }}" alt="{{ product.title }}">
         <p>{{ product.title }}</p>
         <small>{{ product.brand }}</small>
+        <p>{{ product.price }}</p>
+        <a href="{{ product.url }}">buy now</a>
     </li>
     {% empty %}
     <li> There are currently no products</li>

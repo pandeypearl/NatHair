@@ -7,6 +7,7 @@ from .forms import ProductReviewForm
 from django.urls import reverse
 import requests
 import json
+from django.contrib.sessions.models import Session
 
 # Create your views here.
 class ProductView(CreateView):
@@ -19,11 +20,23 @@ class ProductView(CreateView):
         
         # read the JSON
         url = 'https://nathair-product-api.onrender.com/products/'
-        r = requests.get(url)
-        products = r.json()
+        headers = {
+            'Accepts': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0'
+        }
+        session = requests.session()
+        session.headers.update(headers)
+        response = session.get(url)
+        products = response.json()
         # Create product model object for each object in the JSON
-        for product in products[data]:
-            Product.objects.create()
+        for product in products:
+            Product.objects.create(
+                                    brand=product['brand'],
+                                    title=product['title'],
+                                    url=product['url'],
+                                    image=product['image'],
+                                    price=product['price']
+                                    )
         # passing product dict as b template context
         context = {'products': Product.objects.all()}
         return render(request, self.template_name, context)
