@@ -17,5 +17,5 @@ class ProductReviewForm(forms.ModelForm):
         fields = [
             'rate_value',
             'comment',
-            'post',
+            'product',
         ]

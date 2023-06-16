@@ -8,10 +8,9 @@ from .views import (SignUpView,
                     ProfileView,
                     HairProfileUpdateView)
 from django.contrib.auth import views as auth_views
-from django.views.generic import TemplateView
+
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     # Login and Logout
     path('login/', auth_views.LoginView.as_view(
         redirect_authenticated_user=True,

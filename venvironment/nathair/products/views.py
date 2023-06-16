@@ -18,7 +18,7 @@ class ProductView(CreateView):
     def get(self, request, *args, **kwargs):
         
         # read the JSON
-        url = 'http://localhost:5000/products/'
+        url = 'https://nathair-product-api.onrender.com/products/'
         r = requests.get(url)
         products = r.json()
         # Create product model object for each object in the JSON
@@ -43,7 +43,7 @@ class ProductDetailView(FormMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
-        context['form'] = ProductReviewForm(initial={'post': self.object})
+        context['form'] = ProductReviewForm(initial={'product': self.object})
         return context
 
     def post(self, request, *args, **kwargs):

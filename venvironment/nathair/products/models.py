@@ -9,11 +9,11 @@ class Product(models.Model):
         Class product model to store JSON data from our
         NatHairAPI.
     """
-    brand = models.CharField()
-    title = models.CharField()
+    brand = models.CharField(max_length=250)
+    title = models.CharField(max_length=250)
     url = models.URLField()
     image = models.URLField()
-    price = models.CharField()
+    price = models.CharField(max_length=20)
 
     class Meta:
         verbose_name = "product"

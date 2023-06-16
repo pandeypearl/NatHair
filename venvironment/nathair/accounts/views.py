@@ -20,7 +20,9 @@ from .forms import HairProfileForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-
+# Landing Page
+class Home(TemplateView):
+    template_name = 'home.html'
 
 # User Sign Up View.
 class SignUpView(CreateView):
