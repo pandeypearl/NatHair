@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+
+{% block title %}NatHair{% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/landing-page.css' %}?{% cache_bust %}">
+{% endblock styles %}
+
+{% block content %}
+
+<header>
+    <ul>
+        <li><a href="#feature">features</a></li>
+        <li><a href="#about">our story</a></li>
+        <li><a href="https://nathair-product-api.onrender.com/">API</a></li>
+    </ul>
+    <img src="{% static 'img/nathair-1.jpg' %}" alt="">
+
+    <div class="intro-text">
+        <h1>NatHair</h1>
+        <p>Understand, Love and Care for your Natural Hair.</p>
+        <a href="{% url 'home' %}">get started</a>
+    </div>
+
+    
+</header>
+
+<section class="feature-section" id="feature">
+    <div class="feature">
+        <div class="item">
+            <div class="item-text">
+                <h2>Get to know your hair.</h2>
+                <p>Find out all you need to know about your hair type, 
+                what kind of condition your hair is currently in, and what you
+                need to do to keep it healthy.</p>
+            </div>
+        </div>
+
+        <div class="item"></div>
+    </div>
+
+    <div class="feature">
+        <div class="item"></div>
+        <div class="item">
+            <div class="item-text">
+                <h2>Find the right products for your hair.</h2>
+                <p>We will help provide you with the right products
+                    that are specific to your hair type and condition, whilst also
+                letting you know the best places to shop for them.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="item">
+            <div class="item-text">
+                <h2>Get recommendations from the right people.</h2>
+                <p>See what products work for people with a similar hair type,
+                    curl pattern and hair condition as your own crown, so you save on
+                    time and money.
+                </p>
+            </div>
+        </div>
+        <div class="item"></div>
+    </div>
+</section>
+
+<section class="about" id="about">
+    <div class="about-content">
+
+            <h1>How did we get here.</h1>
+            <P>NatHair is a portfolio project for the foundation phase of the  ALX/Holberton School Full Stack Programming course.
+                This project was inspired by my own natural hair journey and the difficulties I personally
+                faced when trying to find resources on how to better take care of my hair, what products to buy, and where I could
+                fond the products I needed for a reasonable price.  
+            </P>
+
+            <p>I wanted to create a place where you could access all the the information you need as well as be part of 
+                a community where people are going through the same dilemmas , therefore building a trusted community so you would
+            not have to go through the natural hair journey alone. Thus NatHair was born.</p>
+
+            <h4>- Pretty Pandey</h4>
+            <hr>
+            <ul>
+                <li><i class="bi bi-linkedin"></i>&nbsp;<a href="https://www.linkedin.com/in/prettypandey" target="_blank">LinkedIn</a></li>
+                <li><i class="bi bi-github"></i>&nbsp;<a href="https://github.com/pandeypearl" target="_blank">Github</a></li>
+                <li><i class="bi bi-laptop"></i>&nbsp;<a href="https://github.com/pandeypearl/NatHair" target="_blank">Project Repository</a></li>
+                <li><i class="bi bi-pc-display-horizontal"></i>&nbsp;<a href="https://github.com/pandeypearl/NatHairAPI" target="_blank">Project API Repository</a></li>
+            </ul>
+    </div>
+    
+</section>
+{% endblock content %}

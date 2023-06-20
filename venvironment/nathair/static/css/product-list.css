@@ -1,0 +1,19 @@
+.product{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.buy-btn{
+    display: block;
+    background: var(--green);
+    border-radius: 8px;
+    box-shadow: var(--shadow-2);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 8px;
+}

@@ -21,6 +21,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Landing Page
+class LandingPage(TemplateView):
+    template_name = 'landing-page.html'
+    
+# Home Page
 class Home(TemplateView):
     template_name = 'home.html'
 

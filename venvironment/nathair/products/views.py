@@ -48,7 +48,7 @@ class ProductDetailView(FormMixin, DetailView):
     """
     # model used 
     model = Product
-    template_name = 'product_detail.html'
+    template_name = 'product-detail.html'
     form_class = ProductReviewForm
 
     def get_success_url(self):
