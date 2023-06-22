@@ -15,6 +15,13 @@
     </div>
 
     <div>
+        <div class="rate-stars">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star"></i>
+        </div>
         <h2>{{ product.title }}</h2>
         <p>{{ product.brand }}</p>
         <p>{{ product.price }}</p>
@@ -25,10 +32,42 @@
 
 </div>
 
-<div class="">
-    <form action="" method="post">
+<div class="product-comments">
+    <form class="rate-form" action="" method="post">
+        <h3>Please rate and share your experience with this product if you have tried it.</h3>
+        <div class="rate-stars">
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+        </div>
         {{form.as_p}}
     </form>
+
+    <div class="comments">
+        <h3>Product Comments</h3>
+        <ul>
+            <li>
+                <p>@pretty <br>
+                    <small>20 June 2022</small>
+                </p>
+                
+                <div class="rate-stars">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star"></i>
+                </div>
+                <p>Really loved this product, worked well in my 4a , high porosity hair. Would definitely
+                    recommend it if you have a similar hair type.
+                </p>
+            </li>
+        </ul>
+    </div>
 </div>
+
+
 
 {% endblock content %}

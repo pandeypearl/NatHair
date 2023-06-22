@@ -17,3 +17,38 @@
     text-decoration: none;
     padding: 8px;
 }
+
+.product-comments{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.rate-form{
+    background-color: var(--green);
+    width: 40%;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.rate-starts{
+    display: flex;
+    gap: 10px;
+}
+
+.comments{
+    width: 40%;
+}
+
+.comments ul{
+    list-style-type: none;
+    padding-left: 0;
+
+}
+
+.comments ul li{
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
