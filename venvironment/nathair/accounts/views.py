@@ -4,7 +4,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import  reverse_lazy
-from django.views.generic import View, CreateView, UpdateView, TemplateView
+from django.views.generic import View, CreateView, UpdateView, TemplateView, ListView
 from .forms import SignUpForm, ProfileForm
 from django.contrib.auth.models import User
 
@@ -18,15 +18,14 @@ from .tokens import account_activation_token
 from django.contrib.auth import login
 from .forms import HairProfileForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from products.models import Product
 
 
 # Landing Page
 class LandingPage(TemplateView):
     template_name = 'landing-page.html'
     
-# Home Page
-class Home(TemplateView):
-    template_name = 'home.html'
+
 
 # User Sign Up View.
 class SignUpView(CreateView):

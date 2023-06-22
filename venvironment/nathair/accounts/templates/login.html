@@ -2,13 +2,14 @@
 {% load static %}
 {% load cache_bust %}
 
-{% block title %}Sign Up{% endblock title %}
+{% block title %} Log in {% endblock title %}
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/reg-form.css' %}?{% cache_bust %}" />
 {% endblock styles %}
 
 {% block content %}
+
 <div class="reg-form-container">
     <form method="post">
         {% csrf_token %}
@@ -22,9 +23,8 @@
             {{form.as_p}}
         </div>
         
-        <button class="reg-btn" type="submit">sign up</button>
+        <button class="reg-btn" type="submit">log in</button>
     </form>
-
 </div>
 
 {% endblock content %}

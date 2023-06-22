@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import View, CreateView
+from django.views.generic import View, CreateView, ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from .models import Product, ProductReview
@@ -8,8 +8,21 @@ from django.urls import reverse
 import requests
 import json
 from django.contrib.sessions.models import Session
+from .models import Product
+
 
 # Create your views here.
+
+# Home Page
+class HomeView(ListView):
+    template_name = 'home.html'
+    model = Product
+
+    def get_queryset(self, *args, **kwargs):
+        products = super(HomeView, self).get_queryset(*args, **kwargs)
+        products = products.order_by("-id")
+        return products
+
 class ProductView(CreateView):
     """
         Class based view to read json data, save data to product

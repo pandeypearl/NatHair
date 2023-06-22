@@ -1,16 +1,52 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
 
 {% block title %}Home{% endblock title %}
 
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}?{% cache_bust %}">
+<link rel="stylesheet" href="{% static 'css/products.css' %}?{% cache_bust %}">
+{% endblock styles %}
+
 {% block content %}
 
-{% if user.is_authenticated %}
-<a href="{% url 'logout' %}">log out</a>
-{% else %}
-<a href="{% url 'signup' %}">sign up</a>
-<a href="{% url 'login' %}">log in</a>
-{% endif %}
+<header style="background-image: url('{% static 'img/nathair-3.jpg' %}');">
+    
+    <div class="home-text">
+        <h1>Start your hair journey with us.</h1>
 
-<h1>NatHair</h1>
+        {% if user.is_authenticated %}
+        <a class="start-btn" href="{% url 'hair-profile' %}">take quiz</a>
+        {% else %}
+        <a class="start-btn" href="{% url 'signup' %}">create profile</a>
+        {% endif %}
+    </div>
+    
+</header>
+
+<section class="products">
+    
+    <ul class="product-list">
+        {% for object in object_list %}
+        <li>
+            <span class="product-img">
+                <img src="{{ object.image }}" alt="{{ object.title }}">
+            </span>
+
+            <span class="product-info">
+                <p class="title">{{ object.title }}</p>
+                <small class="brand">{{ object.brand }}</small>
+                <a class ="product-btn" href="{% url 'product_detail' object.id %}">view product</a>
+            </span>
+
+            </li>
+        {% empty %}
+        <li>There are currently no products</li>
+        {% endfor %}
+    </ul>
+    
+
+</section>
 
 {% endblock content %}

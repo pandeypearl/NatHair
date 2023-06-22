@@ -112,21 +112,21 @@ class HairProfile(models.Model):
     )
 
 
-@receiver(post_save, sender=User)
-def create_hair_profile(sender, instance, created, **kwargs):
-    """
-        Defining signals so Hair Profile model will be created/updated
-        automatically when the User instance is created and updated.
-    """
-    if created:
-        HairProfile.objects.create(user=instance)
+    @receiver(post_save, sender=User)
+    def create_hair_profile(sender, instance, created, **kwargs):
+        """
+            Defining signals so Hair Profile model will be created/updated
+            automatically when the User instance is created and updated.
+        """
+        if created:
+            HairProfile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    """
-        Save event to linking the create_hair_profile and 
-        save_hair_profile methods to User model. 
-    """
-    instance.hairprofile.save()
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        """
+            Save event to linking the create_hair_profile and 
+            save_hair_profile methods to User model. 
+        """
+        instance.hairprofile.save()
 
 

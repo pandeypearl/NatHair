@@ -24,7 +24,7 @@
 <body>
     {% with request.resolver_match.url_name as url_name %}
 
-    {% if not url_name == 'landing-page' %}
+    {% if not url_name == 'landing-page' and not url_name == 'login' and not url_name == 'signup' %}
         {% include 'navbar.html' %}
     {% endif %}
 

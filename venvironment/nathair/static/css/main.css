@@ -26,7 +26,7 @@ body{
 
 .wrapper{
     min-height: 100vh;
-    padding: 50px;
+    padding: 20px 50px;
 }
 /* NAVBAR */
 nav{
@@ -41,8 +41,7 @@ nav{
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    margin: 50px;
-    
+    margin: 20px 50px 0 50px;
     border-radius: 20px;
 }
 
