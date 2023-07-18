@@ -2,29 +2,22 @@
     Models for accounts application
 """
 from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 # User Confirmation.
-class Profile(models.Model):
-    """
-        Profile model to determine if there has been email confirmation
-        for a new signup.
-    """
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email_confirmed = models.BooleanField(default=False)
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_user = models.IntegerField()
+    bio = models.TextField(blank=True)
+    profile_pic = models.ImageField(upload_to='profile_pics', default='blank-profile-pic.png')
+    location = models.CharField(max_length=100, blank=True)
 
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    """
-        Django signal for when new user is created in User model,
-        signal will be triggered and user details will be added to Profile
-        model with default django  email confirmed as false.
-    """
-    if created:
-        Profile.objects.create(user=instance)
-        instance.profile.save()
+    def __str__(self):
+        return self.user.username
+
 
 # User Hair Profile Model
 class HairProfile(models.Model):
@@ -32,7 +25,7 @@ class HairProfile(models.Model):
         Hair profile model extending user model using
         one-to-one link.
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Specifying Hair Type Choices
     TYPE_CHOICES = (
         ("1a", "1a"),
@@ -111,22 +104,6 @@ class HairProfile(models.Model):
         default="ear"
     )
 
-
-    @receiver(post_save, sender=User)
-    def create_hair_profile(sender, instance, created, **kwargs):
-        """
-            Defining signals so Hair Profile model will be created/updated
-            automatically when the User instance is created and updated.
-        """
-        if created:
-            HairProfile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        """
-            Save event to linking the create_hair_profile and 
-            save_hair_profile methods to User model. 
-        """
-        instance.hairprofile.save()
-
+    def __str__(self):
+        return  self.user.username + self.hair_type + self.hair_porosity + self.hair_condition + self.hair_length 
 

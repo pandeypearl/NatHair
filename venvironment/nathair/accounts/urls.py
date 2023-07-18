@@ -1,28 +1,19 @@
 """
     Module for account urls
 """
-from django.urls import path, include
+from django.urls import path
 from . import views
-from .views import (SignUpView, 
-                    ActivateAccount,
-                    ProfileView,
-                    HairProfileUpdateView)
 from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
     # Login and Logout
-    path('login/', auth_views.LoginView.as_view(
-        redirect_authenticated_user=True,
-        template_name='login.html'
-    ), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     # Sign up and Confirmation
-    path('signup/', SignUpView.as_view(), name='signup'),
-    path('acivate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
+    path('signup/',views.signup, name='signup'),
     # User profile
-    path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
-    path('hair_profile', HairProfileUpdateView.as_view(), name='hair-profile'),
+    path('profile/<str:pk>/', views.profile, name='profile'),
     # Change Password
     path('change-password/', auth_views.PasswordChangeView.as_view(
         template_name='change-password.html',

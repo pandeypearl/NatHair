@@ -2,123 +2,95 @@
     Module for account views.
 """
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
-from django.urls import  reverse_lazy
-from django.views.generic import View, CreateView, UpdateView, TemplateView, ListView
-from .forms import SignUpForm, ProfileForm
-from django.contrib.auth.models import User
-
+from django.contrib.auth.models import User, auth
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_encode
-from django.template.loader import render_to_string
-from .tokens import account_activation_token
-
-from django.contrib.auth import login
-from .forms import HairProfileForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from products.models import Product
+from .models import UserProfile, HairProfile
 
 
 # Landing Page
-class LandingPage(TemplateView):
-    template_name = 'landing-page.html'
+login_required(login_url='login')
+def home(request):
+    template = 'home.html'
+
+    context = {}
+
+    return render(request, template, context)
+
+
+
+def signup(request):
     
+    if request.method == 'POST':
+        username = username.POST['username']
+        email = email.POST['email']
+        password = password.POST['password']
+        password2 = password2.POST['password2']
 
+        if password == password2:
+            if User.object.filter(email=email).exists():
+                messages.warning(request, 'Email Already Taken')
+                return redirect('signup')
+            elif User.objects.filter(username=username).exists():
+                messages.waring(request, 'Username unavailable')
+                return redirect('signup')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
 
-# User Sign Up View.
-class SignUpView(CreateView):
-    """
-        Class based view to send account activation details 
-        via email when signing up.
-    """
-    form_class = SignUpForm
-    template_name = 'signup.html'
+                #login user and redirect to settings page
+                user_login = auth.authenticate.get(username=username)
+                auth.login(request, user_login)
 
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-
-            user = form.save(commit=False)
-            #user will be inactive until confirmation
-            user.is_active = False 
-            user.save()
-
-            current_site = get_current_site(request)
-            subject = 'Activate your NatHair Account'
-            message = render_to_string('emails/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            user.email_user(subject, message)
-
-            messages.success(request, ('Please confirmyour email to complete your NatHair registration'))
-
-            return redirect('login')
-
-        return render(request, self.template_name, {'form': form})
-
-# Activate User Account
-class ActivateAccount(View):
-    """
-        Class based view will check if user exists and if token is valid,
-        then set user.is_active = True, user.profile.email_confirmed = True, 
-        and log in user.
-    """
-    def get(self, request, uidb64, token, *args, **kwargs):
-        try:
-            uid = force_str(urlsafe_base64_encode(uidb64))
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
-
-        if user is not None and account_activation_token.check_token(user, token):
-            user.is_active = True
-            user.profile.email_confirmed = True
-            user.save()
-            login(request.user)
-            messages.success(request, ('Your NatHair account has been confirmed.'))
-            return redirect('home')
+                #create profile object for the new user
+                user_model = User.objects.get(username=username)
+                new_profile = UserProfile.objects.create(user=user_model, id_user=user.id)
+                new_profile.save()
         else:
-            messages.warning(request, ('The confirmation link was invalid. It possibly has already been used.'))
-            return redirect('home')
+            messages.warning(request, 'Passwords do not match')
+            return redirect(signup)
+    else:
+        return render(request, 'signup')
 
-# User Edit Profile View.
-class ProfileView(UpdateView):
-    """
-        Class based view to change/update user profile information.
-    """
-    model = User
-    form_class = ProfileForm
-    success_url = reverse_lazy('profile')
-    template_name = 'profile.html'
 
-# User Hair Profile View
-class HairProfileUpdateView(LoginRequiredMixin, TemplateView):
-    form = HairProfileForm
-    template_name = 'hair-profile-update.html'
+def login(request):
 
-    def post(self, request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
 
-        post_data = request.POST or None
+        user = auth.authenticate(username=username, password=password)
 
-        form = HairProfileForm(post_data, instance=request.user)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            messages.warning(request, 'Incorrect email or password')
+            return redirect('login')
+    else:
+        return render(request, 'login.html')
 
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your Hair Profile Has Been Updated')
-            return HttpResponseRedirect(reverse_lazy('profile'))
 
-        context = self.get_context_data(form=form)
+@login_required(login_url='login')
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
 
-        return self.render_to_response(context)
 
-    def get(self, request, *args, **kwargs):
-        return self.post(request, *args, **kwargs)
+def profile(request, pk):
+    template = 'profile.html'
+
+    user_object = User.objects.get(username=pk)
+    user_profile = UserProfile.objects.get(user=user_object)
+    hair_profile = HairProfile.objects.get(user=user_object)
+
+    user = pk
+
+    context = {
+        'user_object': user_object,
+        'user_profile': user_profile,
+        'hair_profile': hair_profile,
+    }
+
+    return render(request, context, template)
+
