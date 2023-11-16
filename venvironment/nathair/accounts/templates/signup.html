@@ -14,15 +14,47 @@
         {% csrf_token %}
         <a class="home-btn" href="{% url 'home' %}"><i class="bi bi-arrow-left"></i></a>
 
-        <h1>NatHair</h1>
+        <h2>Sign up</h2>
         <hr>
-        <h2>Log in</h2>
+        <h4>NatHair</h4>
 
         <div class="reg-form-content">
-            {{form.as_p}}
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li><small>{{message}}</small></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if form.errors %}
+            <ul class="error-list">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    <li><small>{{error}}</small></li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <div>
+                {{form.first_name}}
+                {{form.last_name}}
+            </div>
+            
+            <div>
+                {{form.username}}
+                {{form.email}}
+            </div>
+            
+           <div>
+                {{form.password}}
+                {{form.password2}}
+           </div> 
+
+           <button class="reg-btn" type="submit">Sign up</button>
         </div>
         
-        <button class="reg-btn" type="submit">sign up</button>
+        
     </form>
 
 </div>

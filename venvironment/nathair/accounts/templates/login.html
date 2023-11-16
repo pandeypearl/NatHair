@@ -11,19 +11,31 @@
 {% block content %}
 
 <div class="reg-form-container">
-    <form method="post">
+    <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <a class="home-btn" href="{% url 'home' %}"><i class="bi bi-arrow-left"></i></a>
 
-        <h1>NatHair</h1>
-        <hr>
         <h2>Log in</h2>
+        <hr>
+        <h4>NatHair</h4>
 
         <div class="reg-form-content">
-            {{form.as_p}}
+            {% if form.errors %}
+            <ul class="error-list">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    <li><small>{{error}}</small></li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {{form.username}}
+            {{form.password}}
+            <button class="reg-btn" type="submit">Log in</button>
         </div>
         
-        <button class="reg-btn" type="submit">log in</button>
+        
     </form>
 </div>
 

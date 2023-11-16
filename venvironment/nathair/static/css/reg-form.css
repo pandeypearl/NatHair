@@ -4,15 +4,26 @@
     align-items: center;
     min-height: 80vh;
     margin-top: 50px;
+    
 }
 
 .reg-form-container form{
     background-color: var(--green);
-    padding: 50px;
+    padding: 30px;
     color: white;
     box-shadow: var(--shadow-1);
     border-radius: 10px;
-    width: 300px;
+}
+
+.reg-form-container form input{
+    box-sizing: border-box;
+    border: 1px solid white;
+    margin: 10px 0;
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
 }
 
 .home-btn{
@@ -28,10 +39,10 @@
     border-radius: 50%;
 }
 
-h1, h2{
+h2, h4{
     margin: 0;
     text-align: center;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 hr{
@@ -40,13 +51,19 @@ hr{
 }
 
 .reg-form-content{
-    margin: 50px 0;
+    margin: 30px 0;
+}
+
+.reg-form-content div{
+    display: flex;
+    gap: 10px;
 }
 
 .reg-btn{
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 12px 16px;
+    margin: 10px auto;
     border-radius: 6px;
     color: white;
     border: 1px solid white;
@@ -56,3 +73,11 @@ hr{
     cursor: pointer;
 }
 
+.reg-btn:hover{
+    background-color: white;
+    color: var(--green);
+}
+
+.error-list, .messages{
+    padding-left: 20px;
+}
