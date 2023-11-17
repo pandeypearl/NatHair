@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import UserProfile, HairProfile
+from .models import UserProfile, Profile, HairProfile
 
 # Register your models here.
 admin.site.register(UserProfile)
+admin.site.register(Profile)
 admin.site.register(HairProfile)
 

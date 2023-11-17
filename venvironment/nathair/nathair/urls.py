@@ -26,7 +26,7 @@ urlpatterns = [
     # Landing Page
     path('', TemplateView.as_view(template_name='landing-page.html'), name='landing-page'),
     # Home
-    path('home/', HomeView.as_view(), name='home'),
+    path('home', HomeView.as_view(), name='home'),
     path('accounts/', include('accounts.urls')),
     path('products/', include('products.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

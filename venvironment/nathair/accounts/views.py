@@ -1,13 +1,13 @@
 """
     Module for account views.
 """
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .models import UserProfile, HairProfile
-from .forms import LoginForm, SignupForm
+from .models import Profile, HairProfile
+from .forms import LoginForm, SignupForm, ProfileForm
 
 
 # Landing Page
@@ -24,7 +24,7 @@ def home(request):
 def signup(request):
     ''' User sign up view '''
     template = 'signup.html'
-    forms = SignupForm()
+    form = SignupForm()
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -52,7 +52,7 @@ def signup(request):
                    
             #create profile object for the new user
             user_model = User.objects.get(username=username)
-            new_profile = UserProfile.objects.create(user=user_model)
+            new_profile = Profile.objects.create(user=user_model)
             new_profile.save()
 
             return redirect('/')
@@ -102,17 +102,42 @@ def logout(request):
 def profile(request, pk):
     template = 'profile.html'
 
-    user_object = User.objects.get(username=pk)
-    user_profile = UserProfile.objects.get(user=user_object)
-    hair_profile = HairProfile.objects.get(user=user_object)
-
-    user = pk
+    user_object = get_object_or_404(User, pk=pk)
+    user_profile = Profile.objects.get(user=user_object)
+    # hair_profile = HairProfile.objects.get(user=user_object)
 
     context = {
         'user_object': user_object,
         'user_profile': user_profile,
-        'hair_profile': hair_profile,
+        # 'hair_profile': hair_profile,
     }
 
-    return render(request, context, template)
+    return render(request, template, context)
 
+@login_required(login_url='login')
+def update_profile(request):
+    ''' User edit profile view '''
+    template = 'edit_profile.html'
+
+    user = request.user
+
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    form = ProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('profile', pk=user.pk)
+        else:
+            messages.warning(request, 'Something went wrong, please try again')
+    else:
+        form = ProfileForm(instance=profile)
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)

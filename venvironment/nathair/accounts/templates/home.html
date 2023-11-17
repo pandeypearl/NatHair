@@ -17,7 +17,7 @@
         <h1>Start your hair journey with us.</h1>
 
         {% if user.is_authenticated %}
-        <a class="start-btn" href="{% url 'hair-profile' %}">take quiz</a>
+        <a class="start-btn" href="">take quiz</a>
         {% else %}
         <a class="start-btn" href="{% url 'signup' %}">create profile</a>
         {% endif %}

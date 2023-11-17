@@ -1,0 +1,54 @@
+.user-profiles{
+    display: flex;
+    gap: 50px;
+}
+.profile-card{
+    box-shadow: var(--shadow-2);
+    padding: 30px;
+    border-radius: 20px;
+    width: 20rem;
+}
+
+.profile-card img{
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--green);
+}
+
+.profile-card .user-info{
+    display: flex;
+    gap: 20px;
+}
+
+.profile-card .user-info div p{
+    margin:5px 0;
+}
+
+.private-info{
+    margin: 30px 0;
+}
+
+.private-info p{
+    margin: 10px 0;
+}
+
+.btn{
+    padding: 10px 16px;
+    border: 2px solid var(--green);
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: var(--shadow-3);
+    display: block;
+    margin: 30px 0;
+    text-align: center;
+    color: white;
+    background-color: var(--green);
+}
+
+.btn:hover{
+    background-color: white;
+    color: var(--green);
+}

@@ -8,6 +8,19 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # User Confirmation.
+class Profile(models.Model):
+    ''' Defines user profile model '''
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=255, null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
+    profile_pic = models.ImageField(upload_to='profile_pics', default='blank-profile-pic.png')
+    location = models.CharField(max_length=255, null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     id_user = models.IntegerField()

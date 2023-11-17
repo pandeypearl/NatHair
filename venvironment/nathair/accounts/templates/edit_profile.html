@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/reg-form.css' %}?{% cache_bust %}" />
+{% endblock %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+
+    <div class="reg-form-container">
+        
+        <form action="{% url 'update_profile' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <a class="home-btn" href="{% url 'profile' pk=user.pk %}"><i class="bi bi-arrow-left"></i></a>
+            <h2>Update Profile</h2>
+            <hr>
+
+            <div class="reg-form-content">
+                <div>
+                    <p>Profile Picture</p>
+                    <div class="file-input-container">
+                        {{form.profile_pic}}
+                    </div>
+                    
+                </div>
+                {{form.full_name}}
+                {{form.bio}}
+                <div>
+                    {{form.date_of_birth}}
+                    {{form.location}}
+                </div>
+                
+            </div>
+            
+            <button type="submit" class="reg-btn">Update Profile</button>
+        </form>
+    </div>
+    
+
+{% endblock %}

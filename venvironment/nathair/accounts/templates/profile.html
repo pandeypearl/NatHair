@@ -1,13 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
 
-{% block title %}{{username}} Profile{% endblock title %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}?{% cache_bust %}">
+{% endblock %}
+{% block title %}Profile : @{{user_object.username}}{% endblock title %}
 
 {% block content %}
-<h2>User Profile</h2>
 
-<form action="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Update</button>
-</form>
+
+<div class="user-profiles">
+    <div class="profile-card">
+        <div class="user-info">
+            <img src="{{user_profile.profile_pic.url}}" alt="User Profile Picture">
+            <div>
+                <p><strong>{{user_profile.full_name}}</strong></p>
+                <p><small>@{{user_object.username}}</small></p>
+                <p><small>{{user_profile.location}}</small></p>
+            </div>
+        </div>
+        <div class="private-info">
+            <p><small>{{user_object.email}}</small></p>
+            <p><small>{{user_profile.date_of_birth}}</small></p>
+        </div>
+        
+        <p class="user-bio"><small>{{user_profile.bio}}</small></p>
+
+        <a href="{% url 'update_profile' %}" class="btn">Update Profile</a>
+    </div>
+
+    <div class="profile-card">
+        <h3>Hair Profile</h3>
+    </div>
+</div>
+
+
 {% endblock content %}

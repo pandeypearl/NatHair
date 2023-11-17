@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import HairProfile
+from .models import Profile, HairProfile
 
 #User Sign Up Form
 class SignupForm(forms.Form):
@@ -22,15 +22,24 @@ class LoginForm(forms.Form):
 
 #User Profile Form
 class ProfileForm(forms.ModelForm):
-
+    ''' User Create/Edit Profile Form '''
     class Meta:
-        model = User
+        model = Profile
         fields = [
-            'username',
-            'first_name',
-            'last_name',
-            'email',
+            'full_name',
+            'bio',
+            'profile_pic',
+            'location',
+            'date_of_birth',
         ]
+        widgets = {
+            'full_name': forms.TextInput(attrs={'placeholder': 'Full Name'}),
+            'bio': forms.Textarea(attrs={'placeholder': 'Bio'}),
+            'profile_pic': forms.FileInput(attrs={'class': 'file-input', 'placeholder': 'Profile Picture'}),
+            'location': forms.TextInput(attrs={'placeholder': 'Location'}),
+            'date_of_birth': forms.TextInput(attrs={'placeholder': 'Date of Birth'}),
+        }
+
 
 #User Hair Profile Form
 class HairProfileForm(forms.ModelForm):

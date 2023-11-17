@@ -13,7 +13,8 @@ urlpatterns = [
     # Sign up and Confirmation
     path('signup/',views.signup, name='signup'),
     # User profile
-    path('profile/<str:pk>/', views.profile, name='profile'),
+    path('profile/<int:pk>/', views.profile, name='profile'),
+    path('update_profile/', views.update_profile, name='update_profile'),
     # Change Password
     path('change-password/', auth_views.PasswordChangeView.as_view(
         template_name='change-password.html',

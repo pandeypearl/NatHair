@@ -26,6 +26,31 @@
     outline: none;
 }
 
+ /* Style for the file input container */
+ .file-input-container form div p{
+    width: 100%;
+ }
+ .file-input-container {
+    width: auto;
+    margin:0 auto;
+    /* overflow: hidden; */
+}
+
+/* Style for the actual file input */
+
+
+
+.reg-form-container form textarea{
+    box-sizing: border-box;
+    border: 1px solid white;
+    margin: 10px 0;
+    width: 100%;
+    height: 30opx;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+}
+
 .home-btn{
     width: 40px;
     height: 40px;
