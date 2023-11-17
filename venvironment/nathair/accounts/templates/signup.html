@@ -18,6 +18,8 @@
         <hr>
         <h4>NatHair</h4>
 
+        <p><small>Already have an account?&nbsp;<a href="{% url 'login' %}" style="color: white;">Log in here</a></small></p>
+        
         <div class="reg-form-content">
             {% if messages %}
             <ul class="messages">
@@ -50,6 +52,8 @@
                 {{form.password}}
                 {{form.password2}}
            </div> 
+
+           
 
            <button class="reg-btn" type="submit">Sign up</button>
         </div>

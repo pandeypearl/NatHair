@@ -19,6 +19,8 @@
         <hr>
         <h4>NatHair</h4>
 
+        <p><small>Don't have an account yet?&nbsp;<a href="{% url 'signup' %}" style="color: white;">Sign up here</a>.</small></p>
+
         <div class="reg-form-content">
             {% if form.errors %}
             <ul class="error-list">
@@ -32,6 +34,8 @@
 
             {{form.username}}
             {{form.password}}
+
+            <p><small>Forgot your password?&nbsp;<a href="" style="color: white;">Reset it here</a></small></p>
             <button class="reg-btn" type="submit">Log in</button>
         </div>
         
