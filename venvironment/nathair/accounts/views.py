@@ -141,3 +141,11 @@ def update_profile(request):
     }
 
     return render(request, template, context)
+
+@login_required(login_url='login')
+def hair_profile(request):
+    ''' User hair profile view '''
+    template = 'hair_profile.html'
+
+    form = HiarProfileForm(request.POST)
+
