@@ -14,7 +14,11 @@
     <div class="profile-card">
         <a href="{% url 'update_profile' %}" class="profile-btn">Update Profile</a>
         <div class="user-info">
+            {% if user_profile.profile_pic %}
             <img src="{{user_profile.profile_pic.url}}" alt="User Profile Picture" class="profile-img">
+            {% else %}
+            <img src="{% static 'img/default_img/default_texture_img.png' %}" alt="User Profile Picture" class="profile-img">
+            {% endif %}
             <div>
                 <p><strong>{{user_profile.full_name}}</strong></p>
                 <p><small>@{{user_object.username}}</small></p>
@@ -34,22 +38,38 @@
         <h4>Hair Profile</h4>
         <div class="hair-profile-info">
             <p><small>Hair Type</small></p>
+            {% if hair_profile.hair_type %}
             <p><small>{{hair_profile.hair_type}}</small></p>
+            {% else %}
+            <p><small>-</small></p>
+            {% endif %}
         </div>
 
         <div class="hair-profile-info">
             <p><small>Hair Porosity</small></p>
+            {% if hair_profile.hair_porosity %}
             <p><small>{{hair_profile.hair_porosity}}</small></p>
+            {% else %}
+            <p><small>-</small></p>
+            {% endif %}
         </div>
 
         <div class="hair-profile-info">
             <p><small>Hair Condition</small></p>
+            {% if hair_profile.hair_condition %}
             <p><small>{{hair_profile.hair_condition}}</small></p>
+            {% else %}
+            <p><small>-</small></p>
+            {% endif %}
         </div>
 
         <div class="hair-profile-info">
             <p><small>Hair Length</small></p>
+            {% if hair_profile.hair_length %}
             <p><small>{{hair_profile.hair_length}}</small></p>
+            {% else %}
+            <p><small>-</small></p>
+            {% endif %}
         </div>
     </div>
 
@@ -58,24 +78,40 @@
         <h4>Texture Profile</h4>
         <div class="texture-section">
             <div class=texture-img-container>
+                {% if texture_profile.wet_hair %}
                 <img src="{{texture_profile.wet_hair.url}}" alt="Wet Hair Texture" class="texture-img">
+                {% else %}
+                <img src="{% static 'img/default_img/default_texture_img.png' %}" alt="Wet Hair Texture" class="texture-img">
+                {% endif %}
                 <small>Wet Hair</small>
             </div>
             
             <div class="texture-img-container">
+                {% if texture_profile.wet_hair_prod %}
                 <img src="{{texture_profile.wet_hair_prod.url}}" alt="Wet Hair Texture With Product" class="texture-img">
+                {% else %}
+                <img src="{% static 'img/default_img/default_texture_img.png' %}" alt="Wet Hair Texture With Product" class="texture-img">
+                {% endif %}
                 <small>Wet hair (Product)</small>
             </div>
         </div>
 
         <div class="texture-section">
             <div  class="texture-img-container">
+                {% if texture_profile.dry_hair %}
                 <img src="{{texture_profile.dry_hair.url}}" alt="Dry Hair Texture" class="texture-img">
+                {% else %}
+                <img src="{% static 'img/default_img/default_texture_img.png' %}" alt="Dry Hair Texture" class="texture-img">
+                {% endif %}
                 <small>Dry Hair</small>
             </div>
     
             <div class="texture-img-container">
+                {% if texture_profile.dry_hair_prod %}
                 <img src="{{texture_profile.dry_hair_prod.url}}" alt="Dry Hair Texture With Product" class="texture-img">
+                {% else %}
+                <img src="{% static 'img/default_img/default_texture_img.png' %}" alt="Dry Hair Texture With Product" class="texture-img">
+                {% endif %}
                 <small>Dry Hair (Product)</small>
             </div>
         </div>

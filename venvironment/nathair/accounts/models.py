@@ -127,10 +127,10 @@ class TextureProfile(models.Model):
         one-to-one link.
     '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    wet_hair = models.ImageField(upload_to='wet_hair_pics')
-    dry_hair = models.ImageField(upload_to='dry_hair_pics')
-    wet_hair_prod = models.ImageField(upload_to='wet_hair_product_pics')
-    dry_hair_prod = models.ImageField(upload_to='dry_hair_product_pics')
+    wet_hair = models.ImageField(upload_to='wet_hair_pics', blank=True, null=True)
+    dry_hair = models.ImageField(upload_to='dry_hair_pics', blank=True, null=True)
+    wet_hair_prod = models.ImageField(upload_to='wet_hair_product_pics', blank=True, null=True)
+    dry_hair_prod = models.ImageField(upload_to='dry_hair_product_pics', blank=True, null=True)
 
     def __str__(self):
         return self.user.username

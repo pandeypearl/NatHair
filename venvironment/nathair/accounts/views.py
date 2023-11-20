@@ -50,10 +50,17 @@ def signup(request):
             user_login = authenticate(request, username=username, password=password)   
             auth.login(request, user_login)  
                    
-            #create profile object for the new user
+            #create profile objects for the new user
             user_model = User.objects.get(username=username)
+
             new_profile = Profile.objects.create(user=user_model)
             new_profile.save()
+
+            new_hair_profile = HairProfile.objects.create(user=user_model)
+            new_hair_profile.save()
+
+            new_texture_profile = TextureProfile.objects.create(user=user_model)
+            new_texture_profile.save()
 
             return redirect('/')
     else:
