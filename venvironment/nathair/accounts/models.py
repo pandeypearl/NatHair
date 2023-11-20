@@ -38,7 +38,7 @@ class HairProfile(models.Model):
         Hair profile model extending user model using
         one-to-one link.
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Specifying Hair Type Choices
     TYPE_CHOICES = (
         ("1a", "1a"),

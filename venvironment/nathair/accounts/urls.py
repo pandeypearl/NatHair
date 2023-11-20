@@ -15,6 +15,7 @@ urlpatterns = [
     # User profile
     path('profile/<int:pk>/', views.profile, name='profile'),
     path('update_profile/', views.update_profile, name='update_profile'),
+    path('hair_profile/', views.hair_profile, name='hair_profile'),
     # Change Password
     path('change-password/', auth_views.PasswordChangeView.as_view(
         template_name='change-password.html',

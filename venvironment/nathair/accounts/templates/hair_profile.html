@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/reg-form.css' %}?{% cache_bust %}" />
+{% endblock %}
+
+{% block title %}Update Hair Profile{% endblock %}
+
+{% block content %}
+
+<div class="reg-form-container">
+    <form action="{% url 'hair_profile' %}" method="POST">
+        {% csrf_token %}
+        <a class="home-btn" href="{% url 'profile' pk=user.pk %}"><i class="bi bi-arrow-left"></i></a>
+            <h2>Update Hair Profile</h2>
+            <hr>
+
+            <div class="reg-form-content">
+                <div>
+                    {{form.hair_type}}
+                </div>
+
+                <div>
+                    {{form.hair_porosity}}
+                </div>
+
+                <div>
+                    {{form.hair_condition}}
+                </div>
+
+                <div>
+                    {{form.hair_length}}
+                </div>
+            </div>
+            <button type="submit" class="reg-btn">Update Hair Profile</button>
+    </form>
+</div>
+
+{% endblock %}

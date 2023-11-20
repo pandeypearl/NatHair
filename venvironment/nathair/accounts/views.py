@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .models import Profile, HairProfile
-from .forms import LoginForm, SignupForm, ProfileForm
+from .forms import LoginForm, SignupForm, ProfileForm, HairProfileForm
 
 
 # Landing Page
@@ -104,12 +104,12 @@ def profile(request, pk):
 
     user_object = get_object_or_404(User, pk=pk)
     user_profile = Profile.objects.get(user=user_object)
-    # hair_profile = HairProfile.objects.get(user=user_object)
+    hair_profile = HairProfile.objects.get(user=user_object)
 
     context = {
         'user_object': user_object,
         'user_profile': user_profile,
-        # 'hair_profile': hair_profile,
+        'hair_profile': hair_profile,
     }
 
     return render(request, template, context)
@@ -147,5 +147,26 @@ def hair_profile(request):
     ''' User hair profile view '''
     template = 'hair_profile.html'
 
-    form = HiarProfileForm(request.POST)
+    user = request.user
+
+    hair_profile, created = HairProfile.objects.get_or_create(user=request.user)
+
+    form = HairProfileForm(request.POST)
+
+    if request.method == 'POST':
+        form = HairProfileForm(request.POST, instance=hair_profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Hair profile updated successfully.')
+            return redirect('profile', pk=user.pk)
+        else:
+            messages.warning(request, 'Something went wrong. Please try again.')
+    else:
+        form = HairProfileForm(instance=hair_profile)
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
 

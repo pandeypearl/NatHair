@@ -66,6 +66,9 @@ class HairProfileForm(forms.ModelForm):
         )
         widgets = {
             'hair_type': forms.Select(attrs={'placeholder': 'Hair Type'}),
+            'hair_porosity': forms.Select(attrs={'placeholder': 'Hair Porosity'}),
+            'hair_condition': forms.Select(attrs={'placeholder': 'Hair Condition'}),
+            'hair_length': forms.Select(attrs={'placeholder': 'Hair Length'}),
         }
 
 
