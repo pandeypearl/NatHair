@@ -56,69 +56,65 @@ class HairProfile(models.Model):
     )
     hair_type = models.CharField(
         max_length = 2,
-        choices = TYPE_CHOICES,
-        default="4c"
+        choices = TYPE_CHOICES
     )
 
     # Specifying Hair Porosity Choices
     POROSITY_CHOICES = (
-        ("low", "Low Porosity"),
-        ("medium", "Medium Porosity"),
-        ("high", "Hight Porosity"),
+        ("Low Porosity", "Low Porosity"),
+        ("Medium Porosity", "Medium Porosity"),
+        ("Hight Porosity", "Hight Porosity"),
     )
     hair_porosity = models.CharField(
-        max_length=6,
-        choices= POROSITY_CHOICES,
-        default="low"
+        max_length=20,
+        choices= POROSITY_CHOICES
     )
 
     # Specifying Hair Condition Choices
     CONDITION_CHOICES = (
-        ("protein_overload", "Protein Overload"),
-        ("moisture_overload", "Moisture Overload"),
-        ("healthy", "Healthy"),
-        ("dandruff", "Dandruff"),
-        ("hair_loss", "Hair Loss"),
-        ("dry_hair", "Dry Hair"),
-        ("split_ends", "Split Ends"),
-        ("greasy", "Greasy Hair"),
-        ("frizzy", "Frizzy"),
-        ("heat_damage", "Heat Damage"),
-        ("color_damage", "Color Damage")
+        ("Protein Overload", "Protein Overload"),
+        ("Moisture Overload", "Moisture Overload"),
+        ("Healthy", "Healthy"),
+        ("Dandruff", "Dandruff"),
+        ("Hair Loss", "Hair Loss"),
+        ("Dry Hair", "Dry Hair"),
+        ("Split Ends", "Split Ends"),
+        ("Greasy Hair", "Greasy Hair"),
+        ("Frizzy", "Frizzy"),
+        ("Heat Damage", "Heat Damage"),
+        ("Color Damage", "Color Damage")
     )
     hair_condition = models.CharField(
         max_length=20,
-        choices= CONDITION_CHOICES,
-        default="protein_overload"
+        choices= CONDITION_CHOICES
     )
     # Specifying Hair Length Choices
     LENGTH_CHOICES = (
-        ("ear", "Ear Length"),
-        ("necktop", "Neck (top) Length"),
-        ("neckbottom", "Neck (bottom) Length"),
-        ("collarbone", "Collarbone Length"),
-        ("shoulder", "Shoulder Length"),
-        ("armpit", "Armpit Length"),
-        ("brastrap", "Bra Strap Length"),
-        ("midback", "Mid Back Length"),
-        ("waist", "Waist Length"),
-        ("hip", "Hip Length"),
-        ("tailbone", "Tailbone Length"),
-        ("classic", "Classic Length"),
-        ("midthigh", "Mid Thigh Length"),
-        ("knee", "Knee Length"),
-        ("calf", "Calf Length"),
-        ("ankle", "Ankle Length"),
-        ("floor", "Floor Length"),
+        ("Ear Length", "Ear Length"),
+        ("Neck (top) Length", "Neck (top) Length"),
+        ("Neck (bottom) Length", "Neck (bottom) Length"),
+        ("Collarbone Length", "Collarbone Length"),
+        ("Shoulder Length", "Shoulder Length"),
+        ("Armpit Length", "Armpit Length"),
+        ("Bra Strap Length", "Bra Strap Length"),
+        ("Mid Back Length", "Mid Back Length"),
+        ("Waist Length", "Waist Length"),
+        ("Hip Length", "Hip Length"),
+        ("Tailbone Length", "Tailbone Length"),
+        ("Classic Length", "Classic Length"),
+        ("Mid Thigh Length", "Mid Thigh Length"),
+        ("Knee Length", "Knee Length"),
+        ("Calf Length", "Calf Length"),
+        ("Ankle Length", "Ankle Length"),
+        ("Floor Length", "Floor Length"),
     )
     hair_length = models.CharField(
         max_length=20,
-        choices= LENGTH_CHOICES,
-        default="ear"
+        choices= LENGTH_CHOICES
     )
 
     def __str__(self):
-        return  self.user.username + self.hair_type + self.hair_porosity + self.hair_condition + self.hair_length 
+        return  self.user.username
 
 
 class TextureProfile(models.Model):
@@ -127,10 +123,10 @@ class TextureProfile(models.Model):
         one-to-one link.
     '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    wet_hair = models.ImageField(upload_to='wet_hair_pics', blank=True, null=True)
-    dry_hair = models.ImageField(upload_to='dry_hair_pics', blank=True, null=True)
-    wet_hair_prod = models.ImageField(upload_to='wet_hair_product_pics', blank=True, null=True)
-    dry_hair_prod = models.ImageField(upload_to='dry_hair_product_pics', blank=True, null=True)
+    wet_hair = models.ImageField(upload_to='wet_hair_pics', blank=True, null=True, default='blank-profile-pic.png')
+    dry_hair = models.ImageField(upload_to='dry_hair_pics', blank=True, null=True, default='blank-profile-pic.png')
+    wet_hair_prod = models.ImageField(upload_to='wet_hair_product_pics', blank=True, null=True, default='blank-profile-pic.png')
+    dry_hair_prod = models.ImageField(upload_to='dry_hair_product_pics', blank=True, null=True, default='blank-profile-pic.png')
 
     def __str__(self):
         return self.user.username
