@@ -13,6 +13,7 @@
     color: white;
     box-shadow: var(--shadow-1);
     border-radius: 10px;
+    max-width: 50vw;
 }
 
 .reg-form-container form input{
@@ -79,7 +80,7 @@ hr{
     margin: 30px 0;
 }
 
-.reg-form-content div{
+.reg-form-content .form-flex{
     display: flex;
     gap: 10px;
 }
@@ -96,6 +97,7 @@ hr{
     font-weight: 900;
     background-color: var(--green);
     cursor: pointer;
+    box-shadow: var(--shadow-3);
 }
 
 .reg-btn:hover{
@@ -103,6 +105,67 @@ hr{
     color: var(--green);
 }
 
+.reg-btn-alt{
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    margin: 10px auto;
+    border-radius: 6px;
+    color: var(--green);
+    border: 1px solid white;
+    text-align: center;
+    font-weight: 900;
+    background-color: white;
+    cursor: pointer;
+    box-shadow: var(--shadow-3);
+}
+
+.reg-btn-alt:hover{
+    background-color: var(--green);
+    color: white;
+}
+
 .error-list, .messages{
     padding-left: 20px;
+}
+
+.custom-dropdown{
+    position: relative;
+    display: block;
+    margin: 20px 0;
+}
+
+.custom-dropdown select{
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    background-color: var(--green);
+}
+
+/* .custom-dropdown::after {
+    content: '\25BC'; 
+    position: absolute;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+} */
+
+/* Style for the dropdown options */
+.custom-dropdown select option {
+    padding: 10px;
+    border: 1px solid white;
+}
+
+.input-label, label{
+    display: block;
+}
+
+input[file]{
+    display: block;
+}
+
+.texture-heading{
+    margin-top: 50px;
 }

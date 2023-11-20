@@ -6,8 +6,8 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .models import Profile, HairProfile
-from .forms import LoginForm, SignupForm, ProfileForm, HairProfileForm
+from .models import Profile, HairProfile, TextureProfile
+from .forms import LoginForm, SignupForm, ProfileForm, HairProfileForm, TextureProfileForm
 
 
 # Landing Page
@@ -105,11 +105,13 @@ def profile(request, pk):
     user_object = get_object_or_404(User, pk=pk)
     user_profile = Profile.objects.get(user=user_object)
     hair_profile = HairProfile.objects.get(user=user_object)
+    texture_profile = TextureProfile.objects.get(user=user_object)
 
     context = {
         'user_object': user_object,
         'user_profile': user_profile,
         'hair_profile': hair_profile,
+        'texture_profile': texture_profile,
     }
 
     return render(request, template, context)
@@ -169,4 +171,33 @@ def hair_profile(request):
     }
 
     return render(request, template, context)
+
+@login_required(login_url='login')
+def texture_profile(request):
+    ''' User texture profile view. '''
+    template = 'texture_profile.html'
+
+    user  = request.user
+
+    texture_profile, created = TextureProfile.objects.get_or_create(user=request.user)
+
+    form = TextureProfileForm(instance=texture_profile)
+    if request.method == 'POST':
+        form = TextureProfileForm(request.POST, request.FILES, instance=texture_profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Texture profile updated successfully.')
+            return redirect('profile', pk=user.pk)
+        else:
+            messages.warning(request, 'Something went wrong. Please try again')
+    else:
+        form = TextureProfileForm(instance=texture_profile)
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
+    
+
 

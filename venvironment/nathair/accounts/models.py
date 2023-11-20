@@ -34,10 +34,10 @@ class UserProfile(models.Model):
 
 # User Hair Profile Model
 class HairProfile(models.Model):
-    """
+    '''
         Hair profile model extending user model using
         one-to-one link.
-    """
+    '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Specifying Hair Type Choices
     TYPE_CHOICES = (
@@ -120,3 +120,17 @@ class HairProfile(models.Model):
     def __str__(self):
         return  self.user.username + self.hair_type + self.hair_porosity + self.hair_condition + self.hair_length 
 
+
+class TextureProfile(models.Model):
+    '''
+        Hair texture profile model extending user model using
+        one-to-one link.
+    '''
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    wet_hair = models.ImageField(upload_to='wet_hair_pics')
+    dry_hair = models.ImageField(upload_to='dry_hair_pics')
+    wet_hair_prod = models.ImageField(upload_to='wet_hair_product_pics')
+    dry_hair_prod = models.ImageField(upload_to='dry_hair_product_pics')
+
+    def __str__(self):
+        return self.user.username

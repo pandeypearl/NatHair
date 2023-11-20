@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, HairProfile
+from .models import Profile, HairProfile, TextureProfile
 
 #User Sign Up Form
 class SignupForm(forms.Form):
@@ -69,6 +69,22 @@ class HairProfileForm(forms.ModelForm):
             'hair_porosity': forms.Select(attrs={'placeholder': 'Hair Porosity'}),
             'hair_condition': forms.Select(attrs={'placeholder': 'Hair Condition'}),
             'hair_length': forms.Select(attrs={'placeholder': 'Hair Length'}),
+        }
+
+class TextureProfileForm(forms.ModelForm):
+    class Meta:
+        model = TextureProfile
+        fields = (
+            'wet_hair',
+            'dry_hair',
+            'wet_hair_prod',
+            'dry_hair_prod',
+        )
+        widgets = {
+            'wet_hair': forms.FileInput(attrs={'class': 'file-input', 'placeholder': 'Wet Hair'}),
+            'dry_hair': forms.FileInput(attrs={'class': 'file-input', 'placeholder': 'Dry Hair'}),
+            'wet_hair_prod': forms.FileInput(attrs={'class': 'file-input', 'placeholder': 'Wet Hair With Product'}),
+            'dry_hair_prod': forms.FileInput(attrs={'class': 'file-input', 'placeholder': 'Dry Hair With Product'}),
         }
 
 

@@ -1,6 +1,7 @@
 .user-profiles{
     display: flex;
-    gap: 50px;
+    justify-content: space-evenly;
+    margin-top: 50px;
 }
 .profile-card{
     box-shadow: var(--shadow-2);
@@ -9,7 +10,17 @@
     width: 20rem;
 }
 
-.profile-card img{
+.profile-card .profile-btn{
+    text-align: right;
+    display: block;
+    margin-bottom: 30px;
+    text-decoration: none;
+    color: var(--green);
+    font-weight: 900;
+    font-size: 12px;
+}
+
+.profile-card .profile-img{
     display: block;
     width: 100px;
     height: 100px;
@@ -51,4 +62,32 @@
 .btn:hover{
     background-color: white;
     color: var(--green);
+}
+
+.hair-profile-info{
+    display: flex;
+    justify-content: space-between
+}
+
+.texture-section{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.texture-img-container{
+    display: flex;
+    flex-direction: column;
+    width: 6rem;
+}
+
+.texture-img-container small{
+    font-size: 10px;
+}
+
+.texture-img{
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 4px;
 }

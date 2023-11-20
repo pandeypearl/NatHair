@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/reg-form.css' %}?{% cache_bust %}" />
+{% endblock %}
+
+{% block title %}Update Hair Profile{% endblock %}
+
+{% block content %}
+<div class="reg-form-container">
+    <form action="{% url 'texture_profile' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <a class="home-btn" href="{% url 'profile' pk=user.pk %}"><i class="bi bi-arrow-left"></i></a>
+        <h2>Update Texture Profile</h2>
+        <hr>
+
+        <div class="reg-form-content">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li><small>{{message}}</small></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if form.errors %}
+            <ul class="error-list">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    <li><small>{{error}}</small></li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <h3 class="texture-heading">Wet Hair Texture</h3>
+            <div class="form-flex" style="gap: 50px;">
+                <div>
+                    <label class="input-label" for="wet_hair">Wet hair with no product</label>
+                    <small>Upload an image of your wet hair without any product.</small>
+                    {{form.wet_hair}}
+                </div>
+                
+                <div>
+                    <label for="wet_hair_prod">Wet hair with product</label>
+                    <small>Upload an image of your wet hair with all your styling products.</small>
+                    {{form.wet_hair_prod}}
+                </div>
+            </div>
+           
+            <h3 class="texture-heading">Dry Hair Texture</h3>
+            <div class="form-flex" style="gap: 50px;">
+                <div>
+                    <label for="dry_hair">Dry hair with no product</label>
+                    <small>Upload an image of your dry hair without any product.</small>
+                    {{form.dry_hair}}
+                </div>
+                
+                <div>
+                    <label for="dry_hair_prod">Dry hair with product</label>
+                    <small>Upload an image of your dry hair with all your styling products.</small>
+                    {{form.dry_hair_prod}}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="reg-btn-alt">Update Texture Profile</button>
+    </form>
+</div>
+{% endblock %}

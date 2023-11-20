@@ -11,28 +11,43 @@
 {% block content %}
 
 <div class="reg-form-container">
-    <form action="{% url 'hair_profile' %}" method="POST">
+    <form action="{% url 'hair_profile' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <a class="home-btn" href="{% url 'profile' pk=user.pk %}"><i class="bi bi-arrow-left"></i></a>
             <h2>Update Hair Profile</h2>
             <hr>
 
             <div class="reg-form-content">
-                <div>
-                    {{form.hair_type}}
-                </div>
 
-                <div>
-                    {{form.hair_porosity}}
+                <div class="">
+                    <div><h3>Hair Type</h3></div>
+                    
+                    <div class="custom-dropdown">
+                        {{form.hair_type}}
+                    </div>
                 </div>
-
+                
                 <div>
-                    {{form.hair_condition}}
+                    <div><h3>Hair Porosity</h3></div>
+                    <div class="custom-dropdown">
+                        {{form.hair_porosity}}
+                    </div>
                 </div>
-
+                
                 <div>
-                    {{form.hair_length}}
+                    <div><h3>Hair Condition</h3></div>
+                    <div class="custom-dropdown">
+                        {{form.hair_condition}}
+                    </div>
                 </div>
+                
+                <div>
+                    <div><h3>Hair Length</h3></div>
+                    <div class="custom-dropdown">
+                        {{form.hair_length}}
+                    </div>
+                </div>
+                
             </div>
             <button type="submit" class="reg-btn">Update Hair Profile</button>
     </form>
