@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+
+{% block title %}Product List{% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/products.css' %}?{% cache_bust %}">
+{% endblock styles %}
+
+{% block content %}
+<div class="prdouct-container">
+    <div class="product-list-intro">
+        <h2>Recommended Products</h2>
+        <p>{{products|length}} items</p>
+    </div>
+    
+    <ul class="product-list">
+        {% for product in products %}
+        <li>
+            <span class="product-img">
+                <img src="{{ product.image }}" alt="{{ product.title }}">
+            </span>
+    
+            <span class="product-info">
+                <p class="title">{{ product.title }}</p>
+                <small class="brand">{{ product.brand }}</small>
+                <a class ="product-btn" href="{% url 'product_detail' product.id %}">view product</a>
+            </span>  
+        </li>
+        {% empty %}
+        <li> There are currently no products</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
