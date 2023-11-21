@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.views.generic import View, CreateView, ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
@@ -8,7 +9,7 @@ from django.urls import reverse
 import requests
 import json
 from django.contrib.sessions.models import Session
-from .models import Product
+from .models import Product, HairProduct
 
 
 # Create your views here.
@@ -22,6 +23,62 @@ class HomeView(ListView):
         products = super(HomeView, self).get_queryset(*args, **kwargs)
         products = products.order_by("-id")
         return products
+
+
+@login_required(login_url='login')
+def product_list(request):
+    '''
+        View to read json data, save data to product
+        model, and display product list in template.
+    '''
+    template = 'product_list.html'
+
+    url = 'https://nathair-product-api.onrender.com/products/'
+    headers = {
+        'Accepts': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0'
+    }
+    session = requests.session()
+    session.headers.update(headers)
+    response = session.get(url)
+    products = response.json()
+
+    for product in products:
+        existing_product = HairProduct.objects.filter(
+            brand=product['brand'],
+            title=product['title'],
+            url=product['url'],
+            image=product['image'],
+            price=product['price'],
+        ).first()
+
+        if not existing_product:
+            HairProduct.objects.create(
+                brand=product['brand'],
+                title=product['title'],
+                url=product['url'],
+                image=product['image'],
+                price=product['price'],
+            )
+    
+    context = {
+        'products': HairProduct.objects.all()
+    }
+    return render(request, template, context)
+
+
+@login_required(login_url='login')
+def product_detail(request, product_id):
+    template = 'product_detail.html'
+
+    product = get_object_or_404(HairProduct, id=product_id)
+
+    context = {
+        'product': product,
+    }
+
+    return render(request, template, context)
+
 
 class ProductView(CreateView):
     """
