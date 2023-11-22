@@ -2,19 +2,20 @@
     <div>
         <ul>
             <li><a href="{% url 'home' %}">NatHair</a></li>
-        </ul>
-    </div>
-
-    <div>
-        <ul>
             <li><a href="{% url 'landing-page' %}">our story</a></li>
         </ul>
     </div>
 
     <div>
         <ul>
+        <li><a href="">add routine</a></li>
+        <li><a href="{% url 'product_list' %}">hair products</a></li>
+        </ul>
+    </div>
+
+    <div>
+        <ul>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'product_list' %}">hair products</a></li>
             <li><a href="{% url 'profile' pk=user.pk %}">profile</a></li>
             <li><a href="{% url 'logout' %}">log out</a></li>
             {% else %}
