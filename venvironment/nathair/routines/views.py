@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .models import HairRoutine, RoutineStep
-from products.models import HairRoutine
+from products.models import HairProduct
 from .forms import HairRoutineForm, RoutineStepForm, DeleteRoutineStepForm
 
 # Create your views here.
@@ -13,7 +13,7 @@ def create_routine(request):
     form = HairRoutineForm(request.POST)
     
     if request.method == 'POST':
-        form - HairRoutineForm(request.POST)
+        form = HairRoutineForm(request.POST)
         if form.is_valid():
             routine = form.save(commit=False)
             routine.user = request.user
@@ -21,12 +21,9 @@ def create_routine(request):
             routine.description = form.cleaned_data['description'] 
             routine.notes = form.cleaned_data['notes']
 
-            product_id = form.cleaned_data['product']
-            routine.product.set(product_id)
-
             routine.save()
             messages.success(request, 'New hair routine created successfully.')
-            return redirect('')
+            return redirect('routine_detail', routine_id=routine.id)
         else:
             messages.warning(request, 'Something went wrong. Please try again.')
     else:
@@ -55,7 +52,7 @@ login_required(login_url='login')
 def routine_detail(request, routine_id):
     template = 'routine_detail.html'
     routine = get_object_or_404(HairRoutine, id=routine_id)
-    routine_steps = RoutineStep.objects.filter(routine=routine)
+    routine_steps = RoutineStep.objects.filter(hair_routine=routine)
     form = RoutineStepForm(request.POST, request.FILES)
 
     if request.method == 'POST':
@@ -66,7 +63,7 @@ def routine_detail(request, routine_id):
                 step_to_delete = get_object_or_404(RoutineStep, pk=step_id_to_delete)
                 step_to_delete.delete()
                 messages.success(request, 'Routine step deleted')
-                return redirect('routine-detail', routine_id=routine_id)
+                return redirect('routine_detail', routine_id=routine_id)
             else:
                 for field, errors in delete_form.errors.items():
                     for error in errors:
@@ -87,7 +84,7 @@ def routine_detail(request, routine_id):
                 )
                 step.save()
                 messages.success(request, 'Routine step added.')
-                return redirect('routine_detail', routine_id)
+                return redirect('routine_detail', routine_id=routine_id)
             else:
                 messages.warning(request, 'Something went wrong. Please try again.')
                 return render(request, template, {'form': RoutineStepForm})

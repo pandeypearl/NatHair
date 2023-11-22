@@ -169,3 +169,43 @@ input[file]{
 .texture-heading{
     margin-top: 50px;
 }
+
+.help-text{
+    display: block;
+    margin-bottom: 30px;
+}
+
+.routine-progress{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+    color: grey;
+}
+
+.routine-progress p {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.routine-progress p span{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid grey; 
+    border-radius: 50%;
+}
+
+.active-routine-step{
+    color: var(--black);
+}
+
+.active-routine-step span{
+    border: 1px solid var(--black)!important;
+    background: var(--black);
+    color: white;
+    box-shadow: var(--shadow-3); 
+}

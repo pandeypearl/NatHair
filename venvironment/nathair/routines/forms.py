@@ -11,11 +11,21 @@ class HairRoutineForm(forms.ModelForm):
             'description',
             'notes',
         ]
-        widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'Routine Name'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Routine Description'}),
-            'notes': forms.Textarea(attrs={'placeholder': 'Additional Notes'}),
-        }
+
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Routine Name'}),
+        help_text='Please name your routine eg. \"Summer hair routine\".',
+    )
+
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Routine Description'}),
+        help_text='Please provide a description for your routine, eg. \"My full summer hair routine including wash day and styling\".'
+    )
+
+    notes = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Additional Notes'}),
+        help_text='Any additional text to help your routine be more understandable.'
+    )
 
     def clean_name(self):
         ''' Field level validation ensuring name is not empty. '''
@@ -36,9 +46,13 @@ class RoutineStepForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Routine Step Title'}),
             'description': forms.Textarea(attrs={'placeholder': 'Routine Step Description'}),
-            'product': forms.Select(help_text='Select the product you use for this step.'),
         }
 
+    product = forms.ModelChoiceField(
+        queryset=HairProduct.objects.all(),
+        help_text='Select the product you use for this step'
+    )
+    
     def clean_title(self):
         ''' Field level validation ensuring title is not empty. '''
         title = self.cleaned_data.get('title')

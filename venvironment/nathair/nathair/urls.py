@@ -29,6 +29,7 @@ urlpatterns = [
     path('home', HomeView.as_view(), name='home'),
     path('accounts/', include('accounts.urls')),
     path('products/', include('products.urls')),
+    path('routines/', include('routines.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/reg-form.css' %}?{% cache_bust %}" />
+{% endblock %}
+
+{% block title %}Create Routine{% endblock %}
+
+{% block content %}
+
+{% include 'routine_progress.html' %}
+
+<div class="reg-form-container">
+    <form action="{% url 'create_routine' %}" method="POST">
+        <a class="home-btn" href="{% url 'profile' pk=user.pk %}"><i class="bi bi-arrow-left"></i></a>
+        <h2>New Routine</h2>
+        <hr>
+        
+        <div class="reg-form-content">
+            {% csrf_token %}
+
+            {{ form.name }}
+            <small class="help-text"><i class="bi bi-info-circle"></i> {{form.name.help_text}}</small>
+
+            {{ form.description }}
+            <small class="help-text"><i class="bi bi-info-circle"></i> {{form.description.help_text}}</small>
+
+            {{ form.notes }}
+            <small class="help-text"><i class="bi bi-info-circle"></i> {{form.notes.help_text}}</small>
+        </div>
+        
+        <button type="submit" class="reg-btn">Create Routine</button>
+    </form>
+</div>
+{% endblock %}

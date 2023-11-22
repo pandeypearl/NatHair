@@ -1,0 +1,7 @@
+<div class="routine-progress">
+    {% with request.resolver_match.url_name as url_name %}
+    <p {% if url_name == 'create_routine' %}class="active-routine-step"{% endif %}><span>1</span>Create Routine</p>
+    <p><span>2</span>Add Steps and Products</p>
+    <p><span>3</span>Post Routine</p>
+    {% endwith %}
+</div>
