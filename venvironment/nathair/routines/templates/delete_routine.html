@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/routine.css' %}?{% cache_bust %}" />
+<link rel="stylesheet" href="{% static 'css/reg-form.css' %}?{% cache_bust %}" />
+{% endblock %}
+
+{% block title %}{{routine.name}} - @{{routine.user.username}}{% endblock %}
+
+{% block content %}
+<div class="routines-wrapper">
+    <div class="delete-routine">
+        <h3>Are you sure you want to delete this routine?<br> Once deleted, it can't be undone.</h3>
+        <form action="{% url 'delete_routine' pk=routine.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="step-delete-btn"><i class="bi bi-trash3"></i> Delete Routine</a>
+        </form>
+    </div>
+   
+
+    <div class="routine-container">
+        <div class="hair-routine">
+            <div class="detail-user-info">
+                <img src="{{routine.user.profile.profile_pic.url}}" alt="User Profile Picture">
+                <div>
+                    {% if routine.user.profile.full_name %}
+                    <p>{{routine.user.profile.full_name}}</p>
+                    {% endif %}
+                    <p>@{{routine.user.username}}</p>
+                </div>
+            </div>
+            <p class="routine-detail-name">{{routine.name}}</p>
+            <p><small>{{routine.description}}</small></p>
+            <h4>Additional Notes</h4>
+            <p style="margin-bottom: 30px;"><small>{{routine.notes}}</small></p>
+           
+        </div>
+
+        <div class="routine-steps">
+            <h4>Routine Steps and Products</h4>
+            <p><small>This routine has {{routine_steps.count}} step(s)</small></p>
+            {% if routine_steps %}
+            <div class="routine-steps-detail">
+                <ul>
+                    {% for routine_step in routine_steps %}
+                    <li>
+                        <div>
+                            <p class="routine-step-title">{{routine_step.title}}</p>
+                            <p><small>{{routine_step.description}}</small></p>
+                            <div class="routine-product">
+                                <img src="{{routine_step.product.image}}" alt="{{routine_step.product}}" class="routine-image">
+                                <div class="product-info">
+                                    <p><small>{{routine_step.product.title}}</small></p>
+                                    <p><small>{{routine_step.product.brand}}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </li>
+                    {% endfor %}
+                </ul>
+                
+            </div>
+            
+            {% else %}
+            <p style="text-align:center;">There are no steps to this routine</p>
+            {% endif %}
+        </div>
+        
+    </div>
+
+    
+</div>
+{% endblock %}

@@ -26,15 +26,17 @@
                 </div>
             </div>
             <p class="routine-detail-name">{{routine.name}}</p>
-            <p>{{routine.description}}</p>
+            <p><small>{{routine.description}}</small></p>
             <h4>Additional Notes</h4>
-            <p>{{routine.notes}}</p>
+            <p style="margin-bottom: 30px;"><small>{{routine.notes}}</small></p>
+            <a href="{% url 'delete_routine' routine.id %}" class="step-delete-btn"><i class="bi bi-trash3"></i> Delete Routine</a>
         </div>
 
         <div class="routine-steps">
             {% if routine_steps %}
             <div class="routine-steps-detail">
                 <h4>Routine Steps and Products</h4>
+                <p><small>This routine has {{routine_steps.count}} step(s)</small></p>
                 <ul>
                     {% for routine_step in routine_steps %}
                     <li>

@@ -153,6 +153,7 @@
     cursor: pointer;
     border-radius: 4px;
     box-shadow: var(--shadow-3);
+    text-decoration: none;
 }
 
 .step-delete-btn:hover{
@@ -202,4 +203,16 @@
     font-weight: bold;
     color: var(--green);
     font-size: 1.8rem;
+}
+
+.delete-routine{
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-routine h3{
+    text-align: center;
 }

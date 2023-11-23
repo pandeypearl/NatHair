@@ -39,7 +39,8 @@ def create_routine(request):
 login_required(login_url='login')
 def routines_list(request):
     template= 'routines_list.html'
-    routines = HairRoutine.objects.filter(is_draft=False)
+    routines = HairRoutine.objects.all()
+    # routines = HairRoutine.objects.filter(is_draft=False)
 
     context = {
         'routines': routines,
@@ -114,13 +115,17 @@ login_required(login_url='login')
 def delete_routine(request, pk):
     template = 'delete_routine.html'
     routine = get_object_or_404(HairRoutine, pk=pk)
+    routine_steps = RoutineStep.objects.filter(hair_routine=routine)
 
     if request.method == 'POST':
         routine.delete()
         messages.success(request, 'Your Routine has been deleted.')
-        return redirect('routine_list')
+        return redirect('routines_list')
     
-    context = {'routine': routine}
+    context = {
+        'routine': routine,
+        'routine_steps': routine_steps,
+    }
 
     return render(request, template, context)
 
