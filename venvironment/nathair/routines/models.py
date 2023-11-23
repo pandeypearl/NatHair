@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from products.models import HairProduct
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -16,6 +17,7 @@ class HairRoutine(models.Model):
 
     def publish(self):
         self.is_draft = False
+        self.posted_at = timezone.now()
         self.save()
 
     def __str__(self):

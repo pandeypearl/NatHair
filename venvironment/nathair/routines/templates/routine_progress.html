@@ -1,7 +1,8 @@
 <div class="routine-progress">
     {% with request.resolver_match.url_name as url_name %}
-    <p {% if url_name == 'create_routine' %}class="active-routine-step"{% endif %}><span>1</span>Create Routine</p>
-    <p><span>2</span>Add Steps and Products</p>
-    <p><span>3</span>Post Routine</p>
+    <p {% if url_name == 'create_routine' or url_name == 'routine_detail' %}class="active-routine-step"{% endif %}><span>1</span>Create Routine</p>
+    <p {% if url_name == 'routine_detail' %}class="active-routine-step"{% endif %}><span>2</span>Add Steps and Products</p>
+    
+    <p {% if url_name == 'routine_detail' %}{% if routine_steps %}class="active-routine-step"{% endif %}{% endif %}><span>3</span>Post Routine</p>
     {% endwith %}
 </div>

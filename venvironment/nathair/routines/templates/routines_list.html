@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{% static 'css/routine.css' %}?{% cache_bust %}" />
 {% endblock %}
 
-{% block title %}Create Routine{% endblock %}
+{% block title %}Hair Routines{% endblock %}
 
 {% block content %}
 <div class="routines-wrapper">
@@ -15,6 +15,7 @@
         {% for routine in routines %}
         <li>
             <a href="{% url 'routine_detail' routine.id %}">
+                <small>{{routine.posted_at}}</small>
                 <div class="user-info">
                     <img src="{{routine.user.profile.profile_pic.url}}" alt="User Profile Picture">
                     <div class="user-name">

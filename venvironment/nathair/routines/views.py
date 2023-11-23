@@ -4,7 +4,7 @@ from django.contrib import messages
 
 from .models import HairRoutine, RoutineStep
 from products.models import HairProduct
-from .forms import HairRoutineForm, RoutineStepForm, DeleteRoutineStepForm
+from .forms import HairRoutineForm, RoutineStepForm, DeleteRoutineStepForm, PublishRoutineForm
 
 # Create your views here.
 login_required(login_url='login')
@@ -39,7 +39,7 @@ def create_routine(request):
 login_required(login_url='login')
 def routines_list(request):
     template= 'routines_list.html'
-    routines = HairRoutine.objects.all()
+    routines = HairRoutine.objects.filter(is_draft=False)
 
     context = {
         'routines': routines,
@@ -54,6 +54,7 @@ def routine_detail(request, routine_id):
     routine = get_object_or_404(HairRoutine, id=routine_id)
     routine_steps = RoutineStep.objects.filter(hair_routine=routine)
     form = RoutineStepForm(request.POST, request.FILES)
+    publish_form = PublishRoutineForm()
 
     if request.method == 'POST':
         if 'delete_step' in request.POST:
@@ -69,6 +70,12 @@ def routine_detail(request, routine_id):
                     for error in errors:
                         messages.warning(request, f"Error in {field}: {error}")
                     return redirect('routine_detail', routine_id=routine_id)
+        elif 'publish_routine' in request.POST:
+            publish_form = PublishRoutineForm(request.POST)
+            if publish_form.is_valid():
+                routine.publish()
+                messages.success(request, 'Hair Routine published successfully.')
+                return redirect('routine_detail', routine_id=routine_id)
         else:
             form = RoutineStepForm(request.POST, request.FILES)
             if form.is_valid():
@@ -77,7 +84,7 @@ def routine_detail(request, routine_id):
                 step.description = form.cleaned_data['description']
                 step.product = form.cleaned_data['product']
                 step = RoutineStep.objects.create(
-                    routine=routine,
+                    hair_routine=routine,
                     title=step.title,
                     description=step.description,
                     product=step.product
@@ -97,6 +104,7 @@ def routine_detail(request, routine_id):
         'routine_steps': routine_steps,
         'form': form,
         'delete_form': delete_form,
+        'publish_form': publish_form,
     }
 
     return render(request, template, context)

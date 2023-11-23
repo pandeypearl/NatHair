@@ -130,7 +130,6 @@ hr{
 }
 
 .custom-dropdown{
-    position: relative;
     display: block;
     margin: 20px 0;
 }
@@ -142,6 +141,8 @@ hr{
     border: 1px solid white;
     border-radius: 4px;
     background-color: var(--green);
+    width: 100%;
+    margin: 10px 0;
 }
 
 /* .custom-dropdown::after {

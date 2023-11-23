@@ -48,6 +48,16 @@ class RoutineStepForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'placeholder': 'Routine Step Description'}),
         }
 
+    title = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Routine Step Title'}),
+        help_text='Please provide a title for this step, eg. Pre Poo, Shampoo, Conditioner, Deep Conditioner, Leave-in Conditioner, Styling Cream, Gel, Mouse, etc.'
+    )
+
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Routine Step Description'}),
+        help_text='Add any special actions you take during this part of your routine, eg. \'Shampoo twice\', \'Leave in deep conditioner for 10 minutes\' '
+    )
+
     product = forms.ModelChoiceField(
         queryset=HairProduct.objects.all(),
         help_text='Select the product you use for this step'
@@ -73,3 +83,8 @@ class DeleteRoutineStepForm(forms.ModelForm):
         fields = []
 
     routine_step_id = forms.IntegerField(widget=forms.HiddenInput())
+
+class PublishRoutineForm(forms.Form):
+    def clean(self):
+        # Add any custom validation if needed
+        return super().clean()
