@@ -33,3 +33,13 @@ class RoutineStep(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.title, self.hair_routine)
+
+
+class SavedRoutine(models.Model):
+    ''' Represents the relationship between users and saved routines '''
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    routine = models.ForeignKey(HairRoutine, on_delete=models.CASCADE)
+    saved_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.user, self.routine)
