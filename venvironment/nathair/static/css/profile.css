@@ -1,7 +1,8 @@
 .user-profiles{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-top: 50px;
+    gap:30px;
 }
 .profile-card{
     box-shadow: var(--shadow-2);

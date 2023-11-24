@@ -5,7 +5,7 @@
 .routines-list{
     list-style-type: none;
     display: flex;
-    justify-content: space-between;
+    gap: 30px;
     flex-wrap: wrap;
     padding-left: 0;
 }
@@ -16,6 +16,7 @@
     box-shadow: var(--shadow-3);
     border-radius: 10px;
     position: relative;
+    background-color: white;
 }
 
 .routines-list li a{
@@ -95,6 +96,12 @@
 .hair-routine .routine-detail-name{
     color: var(--green);
     font-weight: 900;
+}
+
+.routine-date{
+    color: var(--green);
+    font-weight: 600;
+    margin-top: 20px;
 }
 
 .routine-steps-detail{

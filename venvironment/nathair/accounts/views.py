@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .models import Profile, HairProfile, TextureProfile
+from routines.models import HairRoutine
 from .forms import LoginForm, SignupForm, ProfileForm, HairProfileForm, TextureProfileForm
 
 
@@ -107,18 +108,21 @@ def logout(request):
 
 
 def profile(request, pk):
+    ''' User profile view '''
     template = 'profile.html'
 
     user_object = get_object_or_404(User, pk=pk)
     user_profile = Profile.objects.get(user=user_object)
     hair_profile = HairProfile.objects.get(user=user_object)
     texture_profile = TextureProfile.objects.get(user=user_object)
+    hair_routines = HairRoutine.objects.filter(user=user_object)
 
     context = {
         'user_object': user_object,
         'user_profile': user_profile,
         'hair_profile': hair_profile,
         'texture_profile': texture_profile,
+        'hair_routines': hair_routines,
     }
 
     return render(request, template, context)
