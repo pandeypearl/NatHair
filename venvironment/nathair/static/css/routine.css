@@ -223,3 +223,82 @@
 .delete-routine h3{
     text-align: center;
 }
+
+.routine-analytics{
+    display: flex;
+    gap: 30px;
+    justify-content: flex-end;
+}
+
+.routine-interaction{
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    margin: 10px 0;
+}
+
+.unsave-form{
+    z-index: 3;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.no-routine-content{
+    text-align: center;
+    margin-top: 20vh;
+    color: var(--green);
+}
+
+.comments-container{
+    display: flex;
+    gap: 30px;
+}
+
+.routine-comments form{
+    display: flex;
+    flex-direction: column;
+}
+
+.routine-comments textarea{
+    border: 1px solid var(--green);
+    border-radius: 10px 10px 0 0;
+    width: 20rem;
+    box-sizing: border-box;
+    padding: 10px;
+    outline: none;
+    font-family: inherit;
+    margin-bottom:0;
+    font-size: 14px;
+}
+
+.routine-comments button{
+    width: 20rem;
+    background-color: var(--green);
+    border: 1px solid var(--green);
+    padding: 6px;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 0 10px 10px;
+}
+
+.reply-btn{
+    color: var(--green);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 12px;
+}
+.user-comment-container{
+    width: 100%;
+}
+.user-comment{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-2);
+    margin-bottom: 20px;
+}
+
+.reply{
+    margin-left:50px;
+}

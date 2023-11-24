@@ -29,7 +29,9 @@
             <p><small>{{routine.description}}</small></p>
             <h4>Additional Notes</h4>
             <p style="margin-bottom: 30px;"><small>{{routine.notes}}</small></p>
+            {% if routine.user == request.user %}
             <a href="{% url 'delete_routine' routine.id %}" class="step-delete-btn"><i class="bi bi-trash3"></i> Delete Routine</a>
+            {% endif %}
         </div>
 
         <div class="routine-steps">
@@ -123,6 +125,62 @@
         </div>
         
     </div>
+    <div class="routine-analytics">
+        <p><i class="bi bi-folder-plus"></i> {{ saved_routines_count }} &nbsp;saves</p>
+        <p><i class="bi bi-heart"></i> {{ likes.count }}&nbsp; likes</p>
+    </div>
+    <div class="routine-interaction">
+        
+        <form method="post" action="{% url 'save_routine' routine.id %}">
+            {% csrf_token %}
+            <button type="submit" class="step-delete-btn"><i class="bi bi-folder-plus"></i> Save Routine</button>
+        </form>
+
+        <form method="post" action="{% url 'routine_detail' routine.id %}">
+            {% csrf_token %}
+            <button type="submit" name="like_routine" class="step-delete-btn">
+                {% if request.user in likes %}
+                <i class="bi bi-heart"></i> Unlike Routine
+                {% else %}
+                <i class="bi bi-heart"></i> Like Routine
+                {% endif %}
+            </button>
+        </form>
+    </div>
+
+    <div class="routine-comments">
+        <h3>Comments <small>{{comments.count}}</small></h3>
+        <div class="comments-container">
+            <form method="post" action="{% url 'routine_detail' routine.id %}">
+                {% csrf_token %}
+                <textarea name="comment_text" placeholder="Add a comment"></textarea>
+                <button type="submit" name="comment">Post Comment</button>
+            </form>
+
+            <div class="user-comment-container">
+                {% for comment in comments %}
+                <div class="user-comment">
+                    <span><small><strong>@{{ comment.user.username }}</strong>&nbsp; - &nbsp;{{ comment.created_at|date:"F d, Y H:i:s" }}<br> 
+                        {{ comment.text }}</small>
+                    </span><br>
+                    <a href="#" onclick="toggleReplyForm('{{ comment.id }}')" class="reply-btn">Reply</a>
+                    <div id="replyForm{{ comment.id }}" style="display:none;">
+                        <form method="post" action="{% url 'routine_detail' routine.id %}">
+                            {% csrf_token %}
+                            <textarea name="comment_text" placeholder="Add a reply"></textarea>
+                            <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
+                            <button type="submit" name="comment">Post Reply</button>
+                        </form>
+                    </div>
+                    {% for reply in comment.comment_set.all %}
+                        <p class="reply"><small><strong>@{{ reply.user.username }}</strong>&nbsp; - &nbsp;{{ reply.created_at|date:"F d, Y H:i:s" }}<br> {{ reply.text }}</small></p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -136,6 +194,11 @@
     function closeModal() {
         document.getElementById('modalOverlay').style.display = 'none';
         document.getElementById('myModal').style.display = 'none';
+    }
+
+    function toggleReplyForm(commentId) {
+        var replyForm = document.getElementById('replyForm' + commentId);
+        replyForm.style.display = (replyForm.style.display === 'none') ? 'block' : 'none';
     }
 </script>
 {% endblock %}

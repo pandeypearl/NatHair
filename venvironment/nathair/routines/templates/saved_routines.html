@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/routine.css' %}?{% cache_bust %}" />
+{% endblock %}
+
+{% block title %}Saved Hair Routines{% endblock %}
+
+{% block content %}
+<div class="routines-wrapper">
+    <h3>Saved Routines &nbsp;<small><i class="bi bi-folder"></i> {{saved_routines.count}}</small></h3>
+    {% if saved_routines %}
+    <ul class="routines-list">
+        {% for saved_routine in saved_routines %}
+        <li>
+            <a href="{% url 'routine_detail' saved_routine.id %}">
+                <form class="unsave-form" method="post" action="{% url 'unsave_routine' saved_routine.routine.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="step-delete-btn"><i class="bi bi-folder-minus"></i> Remove</button>
+                </form>
+                <div class="user-info">
+                    <img src="{{saved_routine.user.profile.profile_pic.url}}" alt="User Profile Picture">
+                    <div class="user-name">
+                        {% if saved_routine.routine.user.profile.full_name %}
+                        <p><small>{{saved_routine.routine.user.profile.full_name}}</small></p>
+                        {% endif %}
+                        <p><small>@{{saved_routine.routine.user.username}}</small></p>
+                    </div>
+                </div>
+                
+                <p class="routine-name"><small>{{saved_routine.routine.name}}</small></p>
+                <p><small>{{saved_routine.routine.description}}</small></p>
+
+                {% if saved_routine.routine.is_draft == False %}
+                <p class="routine-date"><small>Posted {{saved_routine.routine.posted_at}}</small></p>
+                {% elif saved_routine.routine.is_draft == True %}
+                <p class="routine-date"><small>Draft</small></p>
+                {% endif %}
+            </a>
+            
+        </li>
+        
+    {% endfor %}
+    </ul>
+{% else %}
+    <p class="no-routine-content">You have no saved routines</p>
+{% endif %}
+
+</div>
+
+{% endblock %}
