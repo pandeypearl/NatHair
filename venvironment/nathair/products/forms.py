@@ -2,7 +2,7 @@
     Module for Product application forms.
 """
 from django import forms
-from .models import ProductReview
+from .models import HairProductReview
 
 #Product Review form
 class ProductReviewForm(forms.ModelForm):
@@ -13,7 +13,7 @@ class ProductReviewForm(forms.ModelForm):
     comment = forms.Textarea()
 
     class Meta:
-        model = ProductReview
+        model = HairProductReview
         fields = [
             'rate_value',
             'comment',

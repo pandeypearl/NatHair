@@ -1,14 +1,23 @@
 .user-profiles{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 50px;
     gap:30px;
-}
-.profile-card{
+    background-color: white;
+    border-radius: 20px;
     box-shadow: var(--shadow-2);
     padding: 30px;
-    border-radius: 20px;
+}
+
+.user-profiles hr{
+    border: none;
+    border-right: 1px solid var(--green);
+    opacity: 0.4;
+}
+
+.profile-card{
     width: 20rem;
+    padding: 30px;
 }
 
 .profile-card .profile-btn{
@@ -18,7 +27,7 @@
     text-decoration: none;
     color: var(--green);
     font-weight: 900;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .profile-card .profile-img{

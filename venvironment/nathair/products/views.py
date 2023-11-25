@@ -1,15 +1,15 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.generic import View, CreateView, ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
-from .models import Product, ProductReview
 from .forms import ProductReviewForm
 from django.urls import reverse
 import requests
 import json
 from django.contrib.sessions.models import Session
-from .models import Product, HairProduct
+from .models import HairProduct, SavedHairProduct, HairProductReview
 
 
 # Create your views here.
@@ -17,7 +17,7 @@ from .models import Product, HairProduct
 # Home Page
 class HomeView(ListView):
     template_name = 'home.html'
-    model = Product
+    model = HairProduct
 
     def get_queryset(self, *args, **kwargs):
         products = super(HomeView, self).get_queryset(*args, **kwargs)
@@ -72,12 +72,43 @@ def product_detail(request, product_id):
     template = 'product_detail.html'
 
     product = get_object_or_404(HairProduct, id=product_id)
+    saved_product_count = product.num_saves()
 
     context = {
         'product': product,
+        'saved_product_count': saved_product_count,
     }
 
     return render(request, template, context)
+
+
+@login_required(login_url='login')
+def save_product(request, product_id):
+    product = get_object_or_404(HairProduct, id=product_id)
+
+    if not SavedHairProduct.objects.filter(user=request.user, product=product).exists():
+        SavedHairProduct.objects.create(user=request.user, product=product)
+        messages.success(request, 'Product saved successfully.')
+    else:
+        messages.warning(request, 'You have already saved this product.')
+    return redirect('product_detail', product_id=product_id)
+
+
+@login_required(login_url='login')
+def saved_products(request):
+    template = 'saved_products.html'
+    saved_products = SavedHairProduct.objects.filter(user=request.user)
+    context = {
+        'saved_products':saved_products,
+    }
+    return render(request, template, context)
+
+
+@login_required(login_url='login')
+def unsave_product(request, product_id):
+    saved_product = get_object_or_404(SavedHairProduct, user=request.user, product__id=product_id)
+    saved_product.delete()
+    return redirect('saved_products')
 
 
 class ProductView(CreateView):
@@ -117,7 +148,7 @@ class ProductDetailView(FormMixin, DetailView):
         users to rate and comment on individual product.
     """
     # model used 
-    model = Product
+    model = HairProduct
     template_name = 'product-detail.html'
     form_class = ProductReviewForm
 
