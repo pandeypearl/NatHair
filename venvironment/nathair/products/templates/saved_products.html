@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+
+{% block title %}Saved Products{% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/products.css' %}?{% cache_bust %}">
+{% endblock styles %}
+
+{% block content %}
+<div class="prdouct-container">
+    <div class="product-list-intro">
+        <h2>Saved Products <small>&nbsp;<i class="bi bi-folder"></i> {{saved_products|length}}</small></h2>
+    </div>
+    
+    <ul class="product-list">
+        {% for saved_product in saved_products %}
+        <li>
+            <form class="unsave-form" method="post" action="{% url 'unsave_product' saved_product.product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="unsave-btn"><i class="bi bi-folder-minus"></i> Remove</button>
+            </form>
+            <span class="product-img">
+                <img src="{{ saved_product.product.image }}" alt="{{ saved_product.product.title }}">
+            </span>
+    
+            <span class="product-info">
+                <p class="title">{{ saved_product.product.title }}</p>
+                <small class="brand">{{ saved_product.product.brand }}</small>
+                <a class ="product-btn" href="{% url 'product_detail' saved_product.product.id %}">view product</a>
+            </span>  
+        </li>
+        {% empty %}
+        <li> You currently have no saved products</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
