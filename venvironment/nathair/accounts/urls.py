@@ -14,6 +14,8 @@ urlpatterns = [
     path('signup/',views.signup, name='signup'),
     # User profile
     path('profile/<int:pk>/', views.profile, name='profile'),
+    path('profile/<int:pk>/follow/', views.follow, name='follow'),
+    path('profile/<int:pk>/unfollow/', views.unfollow, name='unfollow'),
     path('update_profile/', views.update_profile, name='update_profile'),
     path('hair_profile/', views.hair_profile, name='hair_profile'),
     path('texture_profile/', views.texture_profile, name='texture_profile'),

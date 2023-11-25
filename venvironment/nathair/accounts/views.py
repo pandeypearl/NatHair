@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .models import Profile, HairProfile, TextureProfile
+from .models import Profile, Follow, HairProfile, TextureProfile
 from routines.models import HairRoutine
 from .forms import LoginForm, SignupForm, ProfileForm, HairProfileForm, TextureProfileForm
 
@@ -117,12 +117,23 @@ def profile(request, pk):
     texture_profile = TextureProfile.objects.get(user=user_object)
     hair_routines = HairRoutine.objects.filter(user=user_object)
 
+    followers = user_object.followers.all()
+    following = user_object.following.all()
+    is_following = Follow.objects.filter(follower=request.user, followed=user_object).exists()
+    follower_count = user_object.followers.count()
+    following_count = user_object.following.count()
+
     context = {
         'user_object': user_object,
         'user_profile': user_profile,
         'hair_profile': hair_profile,
         'texture_profile': texture_profile,
         'hair_routines': hair_routines,
+        'followers': followers,
+        'following': following,
+        'is_following': is_following,
+        'follower_count': follower_count,
+        'following_count': following_count,
     }
 
     return render(request, template, context)
@@ -211,4 +222,30 @@ def texture_profile(request):
     return render(request, template, context)
     
 
+@login_required(login_url='login')
+def follow(request, pk):
+    if request.method == 'POST':
+        user_to_follow = get_object_or_404(User, pk=pk).profile.user
+
+        # Checking if the user is not trying to follow themselves
+        if request.user == user_to_follow:
+            return redirect('profile', pk=pk)
+         # Check if the user is already a follower
+        if not Follow.objects.filter(follower=request.user, followed=user_to_follow).exists():
+            Follow.objects.create(follower=request.user, followed=user_to_follow)
+
+    return redirect('profile', pk=pk)
+
+
+@login_required(login_url='login')
+def unfollow(request, pk):
+    if request.method == 'POST':
+        user_to_unfollow = get_object_or_404(User, pk=pk).profile.user
+        
+        # Checking if the user is a follower before unfollowing
+        follow_instance = Follow.objects.filter(follower=request.user, followed=user_to_unfollow).first()
+        if follow_instance:
+            follow_instance.delete()
+
+    return redirect('profile', pk=pk)
 

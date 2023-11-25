@@ -12,6 +12,21 @@
 <div class="user-profiles">
     <div class="profile-card">
         <a href="{% url 'update_profile' %}" class="profile-btn">Update Profile</a>
+        {% if user_object != request.user %}
+            {% if is_following %}
+            <form method="post" action="{% url 'unfollow' pk=user_object.pk %}">
+                {% csrf_token %}
+                <button type="submit">Unfollow</button>
+            </form>
+            {% else %}
+            <form method="post" action="{% url 'follow' pk=user_object.pk %}">
+                {% csrf_token %}
+                <button type="submit">Follow</button>
+            </form>
+            {% endif %}
+        {% endif %}
+
+
         <div class="user-info">
             {% if user_profile.profile_pic %}
             <img src="{{user_profile.profile_pic.url}}" alt="User Profile Picture" class="profile-img">
@@ -32,6 +47,12 @@
                 {% endif %}
             </div>
         </div>
+        <div class="follow-content">   
+            <a href=""><small>Followers {{ follower_count }}</small></a>
+            <a href=""><small>Following {{ following_count }}</small></a>
+            
+        </div>
+        
         <div class="private-info">
             <p><small>{{user_object.email}}</small></p>
             {% if user_profile.date_of_birth %}
