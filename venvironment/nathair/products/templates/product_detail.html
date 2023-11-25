@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% load cache_bust %}
+
 {% load static %}
 
 {% block title %}Product List{% endblock title %}
@@ -12,11 +14,19 @@
 <div class="product-wrapper">
     <div class="product">
         <div class="rate-stars">
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star"></i>
+            {% for star in "12345" %}
+                {% with forloop.counter as counter %}
+                    {% if counter <= product.average_rating|default:0 %}
+                        {% if counter == product.average_rating|default:0 %}
+                            <i class="bi bi-star-half"></i>
+                        {% else %}
+                            <i class="bi bi-star-fill"></i>
+                        {% endif %}
+                    {% else %}
+                        <i class="bi bi-star"></i>
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
         </div>
 
         <img src="{{ product.image }}" alt="{{ product.title }}">
@@ -37,39 +47,52 @@
     </div>
     
     <div class="product-comments">
-        <form class="rate-form" action="" method="post">
-            <h3>Please rate and share your experience with this product if you have tried it.</h3>
-            <div class="rate-stars">
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-            </div>
-            {{form.as_p}}
-        </form>
-    
         <div class="comments">
-            <h3>Product Comments</h3>
+            <h3>Ratings and Comments <small>{{product_reviews.count}}</small></h3>
+
+            
             <ul>
+            {% if product_reviews %}
+                {% for product_review in product_reviews %}
                 <li>
-                    <p>@pretty <br>
-                        <small>20 June 2022</small>
+                    <p><small><strong>@{{product_review.user.username}}</strong></small><br>
+                        <small>{{product_review.review_date}}</small>
                     </p>
                     
                     <div class="rate-stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star"></i>
-                    </div>
-                    <p>Really loved this product, worked well in my 4a , high porosity hair. Would definitely
-                        recommend it if you have a similar hair type.
-                    </p>
+                        {% for _ in product_review.rate_value|default:0|get_range %}
+                            <i class="bi bi-star-fill"></i>
+                        {% endfor %}
+                        {% for _ in "12345" %}
+                            <i class="bi bi-star"></i>
+                        {% endfor %}
+                    </div>  
+                    <p><small>{{product_review.comment}}</small></p>
                 </li>
+                {% endfor %}
+            {% else %}
+                <li><small>This product has no reviews yet.</small></li>
+            {% endif %}
             </ul>
+            
         </div>
+
+        <form class="rate-form" action="{% url 'product_detail' product_id=product.id %}" method="POST">
+            {% csrf_token %}
+
+            <h4>Rate this product</h4>
+            <div class="custom-dropdown">
+                {{form.rate_value}}
+            </div>
+            
+            <div>
+                <p>{{form.comment}}</p>
+                <p><small>{{form.comment.help_text}}</small></p>
+            </div>
+            <button type="submit" class="rate-form-btn">Submit Review</button>
+        </form>
+    
+        
     </div>
 </div>
 

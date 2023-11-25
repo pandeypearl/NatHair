@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.db.models import Avg 
 
 User = get_user_model()
 
@@ -16,6 +17,15 @@ class HairProduct(models.Model):
         verbose_name = "product"
         verbose_name_plural = "products"
 
+    def average_rating(self):
+        reviews = HairProductReview.objects.filter(product=self)
+        avg_rating = reviews.aggregate(Avg('rate_value'))['rate_value__avg']
+
+        if avg_rating is not None:
+            return round(avg_rating, 2)
+        else:
+            return 0
+    
     def num_saves(self):
         return self.savedhairproduct_set.count()
 

@@ -1,13 +1,17 @@
 .product-wrapper{
     margin: 50px 0;
     display: flex;
+    justify-content: space-between;
+    gap: 50px;
 }
 
 .product{
     background-color: white;
     padding: 30px;
     border-radius: 20px;
-    width: 40rem;
+    width: 30rem;
+    height: 80vh;
+    box-shadow: var(--shadow-3);
 }
 
 .product .rate-stars{
@@ -50,15 +54,73 @@
 
 .product-comments{
     display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
+    gap:30px;
+    height: 80vh;
+    
 }
 
 .rate-form{
     background-color: var(--green);
-    width: 40%;
     padding: 20px;
     border-radius: 10px;
+    color: white;
+    width: 24rem;
+    box-shadow: var(--shadow-3);
+}
+
+.rate-form h4{
+    font-weight: 200;
+    margin-bottom: 5px;
+}
+
+.rate-form .custom-dropdown{
+    display: block;
+    margin: 10px 0;
+}
+
+.rate-form .custom-dropdown select{
+    padding: 10px;
+    font-size: 14px;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    background-color: var(--green);
+    width: 100%;
+    margin: 10px 0;
+}
+
+.rate-form textarea{
+    box-sizing: border-box;
+    border: 1px solid white;
+    width: 100%;
+    height: 150px;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.rate-form div p{
+    margin:0;
+    padding:0;
+}
+
+.rate-form-btn{
+    display: block;
+    margin-top: 30px;
+    width: 100%;
+    padding: 8px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-3);
+    color: var(--green);
+}
+
+.rate-form-btn:hover{
+    background-color: var(--green);
     color: white;
 }
 
@@ -69,17 +131,19 @@
 }
 
 .comments{
-    width: 40%;
+    width: 20rem;
+    overflow: scroll;
 }
 
 .comments ul{
     list-style-type: none;
     padding-left: 0;
-
 }
 
 .comments ul li{
     background-color: white;
     padding: 10px;
     border-radius: 5px;
+    width: 100%;
+    box-shadow: var(--shadow-2);
 }

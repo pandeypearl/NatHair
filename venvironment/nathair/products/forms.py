@@ -5,16 +5,18 @@ from django import forms
 from .models import HairProductReview
 
 #Product Review form
-class ProductReviewForm(forms.ModelForm):
-    """
-        Product review form for user input.
-    """
-    rate_value = forms.ChoiceField(label="Rating", required=True, widget=forms.RadioSelect())
-    comment = forms.Textarea()
-
+class HairProductReviewForm(forms.ModelForm):
+    '''
+        Hair Product review form for user input.
+    '''
     class Meta:
         model = HairProductReview
         fields = [
             'rate_value',
             'comment',
         ]
+       
+    comment = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Add your comment here.'}),
+        help_text='Leave a helpful comment about your experience using this product.',
+    )
