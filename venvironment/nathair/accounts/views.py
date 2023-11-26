@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .models import Profile, Follow, HairProfile, TextureProfile
 from routines.models import HairRoutine
+from products.models import HairProduct
 from .forms import LoginForm, SignupForm, ProfileForm, HairProfileForm, TextureProfileForm
 
 
@@ -249,3 +250,32 @@ def unfollow(request, pk):
 
     return redirect('profile', pk=pk)
 
+@login_required(login_url='login')
+def search(request):
+    template = 'search.html'
+    query = request.GET.get('q', '')
+
+    user_results = User.objects.filter(username__icontains=query)
+    routine_results = HairRoutine.objects.filter(name__icontains=query)
+    product_results = HairProduct.objects.filter(title__icontains=query)
+
+    results = []
+
+    for result in user_results:
+        result.model_name = "User"
+        results.append(result)
+
+    for result in routine_results:
+        result.model_name = "HairRoutine"
+        results.append(result)
+
+    for result in product_results:
+        result.model_name = "HairProduct"
+        results.append(result)
+
+    context = {
+        'query': query,
+        'results': results
+    }
+
+    return render(request, template, context)

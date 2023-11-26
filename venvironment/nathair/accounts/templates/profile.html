@@ -11,19 +11,21 @@
 {% block content %}
 <div class="user-profiles">
     <div class="profile-card">
-        <a href="{% url 'update_profile' %}" class="profile-btn">Update Profile</a>
+        
         {% if user_object != request.user %}
             {% if is_following %}
             <form method="post" action="{% url 'unfollow' pk=user_object.pk %}">
                 {% csrf_token %}
-                <button type="submit">Unfollow</button>
+                <button type="submit" class="unfollow-btn"><i class="bi bi-person-dash"></i>&nbsp;unfollow</button>
             </form>
             {% else %}
             <form method="post" action="{% url 'follow' pk=user_object.pk %}">
                 {% csrf_token %}
-                <button type="submit">Follow</button>
+                <button type="submit" class="follow-btn"><i class="bi bi-person-add"></i>&nbsp;follow</button>
             </form>
             {% endif %}
+        {% else %}
+            <a href="{% url 'update_profile' %}" class="profile-btn">Update Profile</a>
         {% endif %}
 
 

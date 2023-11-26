@@ -21,13 +21,38 @@
 }
 
 .profile-card .profile-btn{
-    text-align: right;
     display: block;
     margin-bottom: 30px;
     text-decoration: none;
     color: var(--green);
     font-weight: 900;
     font-size: 14px;
+    padding: 4px 0;
+}
+
+.profile-card .follow-btn,
+.profile-card .unfollow-btn{
+    text-align: right;
+    display: block;
+    margin-bottom: 30px;
+    font-size: 14px;
+    border: 1px solid var(--green);
+    border-radius: 5px;
+    box-shadow: var(--shadow-3);
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.profile-card .follow-btn,
+.profile-card .unfollow-btn:hover{
+    background-color: var(--green);
+    color: white;
+}
+
+.profile-card .unfollow-btn,
+.profile-card .follow-btn:hover{
+    background-color: white;
+    color: var(--green);
 }
 
 .profile-card .profile-img{

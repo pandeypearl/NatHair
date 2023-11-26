@@ -1,0 +1,37 @@
+.search-bar{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin: 50px 0;
+}
+
+.search-bar form{
+    border-radius: 10px;
+}
+
+.search-bar form input{
+    background-color: transparent;
+    border: 1px solid var(--green);
+    padding: 10px;
+    width: 30vw;
+    border-radius: 10px 0 0 10px;
+    margin: 0;
+    outline: none;
+}
+
+.search-bar form .search-btn{
+    display: inline-block;
+    padding: 10px;
+    margin-left:-4px;
+    border-radius: 0 10px 10px 0;
+    background-color: transparent;
+    border: 1px solid var(--green);
+    border-left: none;
+    color: var(--green);
+    cursor: pointer;
+}
+
+.search-bar form .search-btn:hover{
+    background-color: var(--green);
+    color: white;
+}

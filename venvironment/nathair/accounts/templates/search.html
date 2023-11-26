@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}?{% cache_bust %}">
+<link rel="stylesheet" href="{% static 'css/routine.css' %}?{% cache_bust %}" />
+{% endblock %}
+{% block title %}Search Results{% endblock title %}
+
+{% block content %}
+<div class="search-wrapper">
+
+    <h4>Search results for <strong>{{ query }}</strong></h4>
+
+    {% if results %}
+        {% for result in results %}
+            {% if result.model_name == "User" %}
+            <a href="{% url 'profile' pk=result.pk %}">
+                <p>{{result.username}}</p>
+            </a>
+            {% elif result.model_name == "HairRoutine" %}
+            <a href="{% url 'routine_detail' routine_id=result.id %}">
+                <p>{{result.name}}</p>
+            </a>
+            {% elif result.model_name == "HairProduct" %}
+            <a href="{% url 'product_detail' product_id=result.id %}">
+                <p>{{result.title}}</p>
+            </a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <p>No results for <strong>{{query}}</strong></p>
+    {% endif %}
+</div>
+{% endblock %}
