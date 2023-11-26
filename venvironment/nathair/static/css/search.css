@@ -35,3 +35,132 @@
     background-color: var(--green);
     color: white;
 }
+
+.search-wrapper{
+    margin: 50px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.search-container h3{
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-container .search-result{
+    display: block;
+    background-color: white;
+    box-shadow: var(--shadow-2);
+    text-decoration: none;
+    color: var(--black);
+    padding: 20px;
+    border-radius: 10px;
+    width: 60vw;
+    margin-bottom: 20px;
+}
+
+.user-search-results{}
+
+.user-search-results .user-profile{
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.user-search-results .user-profile .user-profile-info{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-search-results .user-profile img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user-search-results .user-profile p{
+    margin:0;
+}
+
+.user-search-results .user-profile small{
+    display: block;
+}
+
+.user-search-results .user-hair-profile{
+    display: flex;
+    gap: 20px;
+}
+
+.user-search-results .user-hair-profile small{
+    background-color: var(--green);
+    padding: 2px 6px;
+    border-radius: 5px;
+    color: white;
+}
+
+.user-search-results .user-follow-info{
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    color: var(--green);
+}
+
+.routine-search-results .search-routine-intro{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.routine-search-results .search-routine-analytics{
+    display: flex;
+    color: var(--green);
+    gap: 20px;
+}
+
+.routine-search-results div span{
+    
+}
+
+.routine-search-results p{
+    margin:0;
+}
+
+.routine-search-results p .routine-name{
+    font-size: 14px;
+}
+
+.routine-search-results .date{
+    color: var(--green);
+}
+
+.product-search-results{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-search-results .product-info{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.product-search-results img{
+    width: 50px;
+    height: auto;
+}
+
+.product-search-results div p{
+    margin:0;
+}
+
+.product-search-results div p .product-title{
+    font-size: 14px;
+}
+
+.product-search-results div span{
+    display: block;
+    color: var(--green);
+}

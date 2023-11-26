@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/follow.css' %}?{% cache_bust %}">
+{% endblock %}
+
+{% block title %}{{user.username}} follow list{% endblock %}
+
+{% block content %}
+<div class="follow-wrapper">
+    <div class="follow-container">
+        <h3>Users @{{ user.username }} is following</h3>
+        <div>
+            {% if following %}
+                {% for followed in following %}
+                <a href="{% url 'profile' pk=followed.followed.pk %}" class="user-container">
+                    <div class="user-profile">
+                        <div class="user-profile-info">
+                            <img src="{{ followed.followed.profile.profile_pic.url }}" alt="">
+                            <div>
+                                {% if followed.followed.profile.full_name %}
+                                    <p>{{followed.followed.profile.full_name}}</p>
+                                {% endif %}
+                                <small><strong>@{{ followed.followed.username }}</strong></small>
+                            </div>
+                        </div>
+                        
+                        <div class="user-hair-profile">
+                            <small>{{ followed.followed.hairprofile.hair_type}}</small>
+                            <small>{{ followed.followed.hairprofile.hair_porosity}}</small>
+                            <small>{{ followed.followed.hairprofile.hair_condition}}</small>
+                            <small>{{ followed.followed.hairprofile.hair_length}}</small>
+                        </div>
+                    </div>
+
+                    <div class="user-follow-info">
+                        <small>{{followed.followed.profile.following_count}} following</small>
+                        <small>{{followed.followed.profile.follower_count}} followers</small>
+                    </div>
+                </a>
+                {% endfor %}
+            {% else %}
+            <p class="user-container"><small><strong>@{{ user.username }}</strong> is currently not following anyone.</small></p>
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+  
+{% endblock %}

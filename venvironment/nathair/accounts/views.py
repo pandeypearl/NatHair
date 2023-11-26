@@ -250,20 +250,53 @@ def unfollow(request, pk):
 
     return redirect('profile', pk=pk)
 
+
+@login_required(login_url='login')
+def followers(request, pk):
+    template = 'followers.html'
+    user = get_object_or_404(User, pk=pk)
+    followers = user.followers.all()
+
+    context = {
+        'user': user,
+        'followers': followers,
+    }
+    return render(request, template, context)
+
+
+@login_required(login_url='login')
+def following(request, pk):
+    template = 'following.html'
+    user = get_object_or_404(User, pk=pk)
+    following = user.following.all()
+
+    context = {
+        'user': user,
+        'following': following,
+    }
+    return render(request, template, context)
+
+
 @login_required(login_url='login')
 def search(request):
     template = 'search.html'
     query = request.GET.get('q', '')
 
     user_results = User.objects.filter(username__icontains=query)
-    routine_results = HairRoutine.objects.filter(name__icontains=query)
+    routine_results = HairRoutine.objects.filter(is_draft=False, name__icontains=query)
     product_results = HairProduct.objects.filter(title__icontains=query)
 
     results = []
 
     for result in user_results:
-        result.model_name = "User"
-        results.append(result)
+        try:
+            profile = Profile.objects.get(user=result)
+            result.profile = profile
+            result.model_name = "User"
+            results.append(result)
+        except Profile.DoesNotExist:
+            result.profile = None 
+            results.append(result)
 
     for result in routine_results:
         result.model_name = "HairRoutine"

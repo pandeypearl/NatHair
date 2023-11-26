@@ -10,27 +10,94 @@
 
 {% block content %}
 <div class="search-wrapper">
+    <div class="search-container">
+        <h3><span>Search results for &nbsp;"{{ query }}"</span> <small>({{results|length}})</small></h3>
 
-    <h4>Search results for <strong>{{ query }}</strong></h4>
+        <div>
+            {% if results %}
+            {% for result in results %}
+                {% if result.model_name == "User" %}
+                <a href="{% url 'profile' pk=result.pk %}" class="search-result">
+                    <div class="user-search-results">
+                        <div class="user-profile">
+                            <div class="user-profile-info">
+                                <img src="{{ result.profile.profile_pic.url }}" alt="">
+                                <div>
+                                    {% if result.profile.full_name %}
+                                        <p>{{result.profile.full_name}}</p>
+                                    {% endif %}
+                                    <small><strong>@{{ result.username }}</strong></small>
+                                </div>
+                            </div>
+                            
+                            <div class="user-hair-profile">
+                                <small>{{ result.hairprofile.hair_type}}</small>
+                                <small>{{ result.hairprofile.hair_porosity}}</small>
+                                <small>{{ result.hairprofile.hair_condition}}</small>
+                                <small>{{ result.hairprofile.hair_length}}</small>
+                            </div>
+                        </div>
 
-    {% if results %}
-        {% for result in results %}
-            {% if result.model_name == "User" %}
-            <a href="{% url 'profile' pk=result.pk %}">
-                <p>{{result.username}}</p>
-            </a>
-            {% elif result.model_name == "HairRoutine" %}
-            <a href="{% url 'routine_detail' routine_id=result.id %}">
-                <p>{{result.name}}</p>
-            </a>
-            {% elif result.model_name == "HairProduct" %}
-            <a href="{% url 'product_detail' product_id=result.id %}">
-                <p>{{result.title}}</p>
-            </a>
+                        <div class="user-follow-info">
+                            <small>{{result.profile.following_count}} following</small>
+                            <small>{{result.profile.follower_count}} followers</small>
+                        </div>
+                    </div>
+                </a>
+                {% elif result.model_name == "HairRoutine" %}
+                <a href="{% url 'routine_detail' routine_id=result.id %}" class="search-result">
+                    <div class="routine-search-results">
+                        <div class="search-routine-intro">
+                            <small class="date">{{result.posted_at}}</small>
+                            <div class="search-routine-analytics">
+                                <small><i class="bi bi-heart"></i> {{result.likes|length}}</small>
+                                <small><i class="bi bi-folder"></i> {{result.num_saves}}</small>
+                            </div>
+                        </div>
+                        <p><strong class="routine-name">{{result.name}}</strong> - <small>@{{result.user}}</small></p>
+                        <small>{{result.description}}</small>
+                    </div>
+                </a>
+                {% elif result.model_name == "HairProduct" %}
+                <a href="{% url 'product_detail' product_id=result.id %}" class="search-result">
+                    <div class="product-search-results">
+                        <div class="product-info">
+                            <img src="{{result.image}}" alt="{{result.title}}">
+                            <div>
+                                <p><strong class="product-title">{{result.title}}</strong></p>
+                                <small>{{result.brand}}</small>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <span>
+                                <small>
+                                    {% for star in "12345" %}
+                                    {% with forloop.counter as counter %}
+                                        {% if counter <= result.average_rating|default:0 %}
+                                            {% if counter == result.average_rating|default:0 %}
+                                                <i class="bi bi-star-half"></i>
+                                            {% else %}
+                                                <i class="bi bi-star-fill"></i>
+                                            {% endif %}
+                                        {% else %}
+                                            <i class="bi bi-star"></i>
+                                        {% endif %}
+                                    {% endwith %}
+                                    {% endfor %}
+                                </small>
+                            </span>
+                            <span><small><i class="bi bi-folder"></i> {{result.num_saves}}</small></span>
+                        </div>
+                    </div>
+                    
+                </a>
+                {% endif %}
+            {% endfor %}
+            {% else %}
+            <p>No results for <strong>{{query}}</strong></p>
             {% endif %}
-        {% endfor %}
-    {% else %}
-    <p>No results for <strong>{{query}}</strong></p>
-    {% endif %}
+        </div>
+    </div>
 </div>
 {% endblock %}

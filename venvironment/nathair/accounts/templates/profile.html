@@ -50,9 +50,8 @@
             </div>
         </div>
         <div class="follow-content">   
-            <a href=""><small>Followers {{ follower_count }}</small></a>
-            <a href=""><small>Following {{ following_count }}</small></a>
-            
+            <a href="{% url 'followers' pk=user_object.pk %}"><small>Followers {{ follower_count }}</small></a>
+            <a href="{% url 'following' pk=user_object.pk %}"><small>Following {{ following_count }}</small></a>
         </div>
         
         <div class="private-info">
