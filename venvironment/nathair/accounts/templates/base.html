@@ -30,7 +30,9 @@
     {% endif %}
 
     <div class="wrapper">
+        {% if not url_name == 'create_routine' and not url_name == 'routine_detail' and not url_name == 'delete_routine'  and not url_name == 'landing-page' and not url_name == 'home' and not url_name == 'profile' %}
         {% include 'search-bar.html' %}
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
     

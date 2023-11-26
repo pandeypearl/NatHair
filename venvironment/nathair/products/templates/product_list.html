@@ -9,29 +9,50 @@
 {% endblock styles %}
 
 {% block content %}
-<div class="prdouct-container">
-    <div class="product-list-intro">
-        <h2>Recommended Products</h2>
-        <p>{{products|length}} items</p>
+<div class="products-wrapper">
+    <div class="prdouct-container">
+        <div class="product-list-intro">
+            <h2>All Hair Products</h2>
+            <p>{{products|length}} items</p>
+        </div>
+        
+        <div class="product-list">
+            {% for product in products %}
+            <a href="{% url 'product_detail' product.id %}" class="product-item">
+                <div class="product-info">
+                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                    <div>
+                        <p class="title">{{ product.title }}</p>
+                        <small class="brand">{{ product.brand }}</small>
+                        
+                        <div class="analytics">
+                            <small>
+                                {% for star in "12345" %}
+                                {% with forloop.counter as counter %}
+                                    {% if counter <= product.average_rating|default:0 %}
+                                        {% if counter == product.average_rating|default:0 %}
+                                            <i class="bi bi-star-half"></i>
+                                        {% else %}
+                                            <i class="bi bi-star-fill"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <i class="bi bi-star"></i>
+                                    {% endif %}
+                                {% endwith %}
+                                {% endfor %}
+                            </small>
+                        
+                            <small class="saves"><i class="bi bi-folder"></i> {{product.num_saves}}</small>
+                        </div>
+                        
+                    </div>
+                </div>
+        
+            </a>
+            {% empty %}
+            <li> There are currently no products</li>
+            {% endfor %}
+        </div>
     </div>
-    
-    <ul class="product-list">
-        {% for product in products %}
-        <li>
-            <span class="product-img">
-                <img src="{{ product.image }}" alt="{{ product.title }}">
-            </span>
-    
-            <span class="product-info">
-                <p class="title">{{ product.title }}</p>
-                <small class="brand">{{ product.brand }}</small>
-                <a class ="product-btn" href="{% url 'product_detail' product.id %}">view product</a>
-            </span>  
-        </li>
-        {% empty %}
-        <li> There are currently no products</li>
-        {% endfor %}
-    </ul>
 </div>
-
 {% endblock %}
