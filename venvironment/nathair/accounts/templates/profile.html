@@ -65,10 +65,12 @@
         
         <p class="user-bio"><small>{{user_profile.bio}}</small></p>
 
+        {% if user_object == request.user %}
         <div class="user-saved-content">
             <a href="{% url 'saved_routines' %}"><i class="bi bi-folder"></i> Saved Routines</a>
             <a href="{% url 'saved_products' %}"><i class="bi bi-folder"></i> Saved Products</a>
         </div>
+        {% endif %}
     </div>
 
     <hr>

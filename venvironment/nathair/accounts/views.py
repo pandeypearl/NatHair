@@ -116,7 +116,11 @@ def profile(request, pk):
     user_profile = Profile.objects.get(user=user_object)
     hair_profile = HairProfile.objects.get(user=user_object)
     texture_profile = TextureProfile.objects.get(user=user_object)
-    hair_routines = HairRoutine.objects.filter(user=user_object)
+    
+    if request.user == user_object:
+        hair_routines = HairRoutine.objects.filter(user=user_object)
+    else:
+        hair_routines = HairRoutine.objects.filter(user=user_object, is_draft=False)
 
     followers = user_object.followers.all()
     following = user_object.following.all()
