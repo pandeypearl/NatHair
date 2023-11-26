@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="products-wrapper">
-    <div class="prdouct-container">
+    <div class="product-container">
         <div class="product-list-intro">
             <h2>All Hair Products</h2>
             <p>{{products|length}} items</p>
@@ -50,7 +50,7 @@
         
             </a>
             {% empty %}
-            <li> There are currently no products</li>
+            <p> There are currently no products</p>
             {% endfor %}
         </div>
     </div>

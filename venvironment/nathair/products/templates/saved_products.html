@@ -9,32 +9,53 @@
 {% endblock styles %}
 
 {% block content %}
-<div class="prdouct-container">
-    <div class="product-list-intro">
-        <h2>Saved Products <small>&nbsp;<i class="bi bi-folder"></i> {{saved_products|length}}</small></h2>
+<div class="products-wrapper">
+    <div class="product-container">
+        <div class="product-list-intro">
+            <h2>Saved Products <small>&nbsp;<i class="bi bi-folder"></i> {{saved_products|length}}</small></h2>
+        </div>
+        
+        <div class="product-list">
+            {% for saved_product in saved_products %}
+            <a href="{% url 'product_detail' saved_product.product.id %}" class="product-item">
+                <form class="unsave-form" method="post" action="{% url 'unsave_product' saved_product.product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="unsave-btn"><i class="bi bi-folder-minus"></i> Remove</button>
+                </form>
+                <div class="product-info">
+                    <img src="{{ saved_product.product.image }}" alt="{{ saved_product.product.title }}">
+                    <div>
+                        <p class="title">{{ saved_product.product.title }}</p>
+                        <small class="brand">{{ saved_product.product.brand }}</small>
+
+                        <div class="analytics">
+                            <small>
+                                {% for star in "12345" %}
+                                {% with forloop.counter as counter %}
+                                    {% if counter <= saved_product.product.average_rating|default:0 %}
+                                        {% if counter == saved_product.product.average_rating|default:0 %}
+                                            <i class="bi bi-star-half"></i>
+                                        {% else %}
+                                            <i class="bi bi-star-fill"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <i class="bi bi-star"></i>
+                                    {% endif %}
+                                {% endwith %}
+                                {% endfor %}
+                            </small>
+                        
+                            <small class="saves"><i class="bi bi-folder"></i> {{saved_product.product.num_saves}}</small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <p> You currently have no saved products</p>
+            {% endfor %}
+        </div>
     </div>
-    
-    <ul class="product-list">
-        {% for saved_product in saved_products %}
-        <li>
-            <form class="unsave-form" method="post" action="{% url 'unsave_product' saved_product.product.id %}">
-                {% csrf_token %}
-                <button type="submit" class="unsave-btn"><i class="bi bi-folder-minus"></i> Remove</button>
-            </form>
-            <span class="product-img">
-                <img src="{{ saved_product.product.image }}" alt="{{ saved_product.product.title }}">
-            </span>
-    
-            <span class="product-info">
-                <p class="title">{{ saved_product.product.title }}</p>
-                <small class="brand">{{ saved_product.product.brand }}</small>
-                <a class ="product-btn" href="{% url 'product_detail' saved_product.product.id %}">view product</a>
-            </span>  
-        </li>
-        {% empty %}
-        <li> You currently have no saved products</li>
-        {% endfor %}
-    </ul>
 </div>
+
 
 {% endblock %}

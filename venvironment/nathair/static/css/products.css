@@ -5,7 +5,7 @@
 }
 .product-container{
     display: flex;
-    align-items: center;
+    flex-direction: column;
 }
 
 .product-list-intro{
@@ -67,8 +67,11 @@
     right: 20px;
     top: 20px;
 }
-
-.product-list li form .unsave-btn{
+.product-list .product-item form {
+    display: flex;
+    justify-content: flex-end;
+}
+.product-list .product-item form .unsave-btn{
     background-color: var(--green);
     color:white;
     cursor: pointer;
