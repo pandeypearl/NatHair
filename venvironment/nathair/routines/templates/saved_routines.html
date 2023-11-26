@@ -20,6 +20,13 @@
                     {% csrf_token %}
                     <button type="submit" class="step-delete-btn"><i class="bi bi-folder-minus"></i> Remove</button>
                 </form>
+
+                {% if saved_routine.routine.is_draft == False %}
+                <p class="routine-date"><small>Posted {{saved_routine.routine.posted_at}}</small></p>
+                {% elif saved_routine.routine.is_draft == True %}
+                <p class="routine-date"><small>Draft</small></p>
+                {% endif %}
+
                 <div class="user-info">
                     <img src="{{saved_routine.user.profile.profile_pic.url}}" alt="User Profile Picture">
                     <div class="user-name">
@@ -31,13 +38,15 @@
                 </div>
                 
                 <p class="routine-name"><small>{{saved_routine.routine.name}}</small></p>
-                <p><small>{{saved_routine.routine.description}}</small></p>
+                <p class="routine-desc" data-max-chars="220"><small>{{saved_routine.routine.description}}</small></p>
 
                 {% if saved_routine.routine.is_draft == False %}
-                <p class="routine-date"><small>Posted {{saved_routine.routine.posted_at}}</small></p>
-                {% elif saved_routine.routine.is_draft == True %}
-                <p class="routine-date"><small>Draft</small></p>
+                <p class="likes-and-saves">
+                    <small><i class="bi bi-heart"></i> {{saved_routine.routine.likes.count}}</small>
+                    <small><i class="bi bi-folder"></i> {{saved_routine.routine.num_saves}}</small>
+                </p>
                 {% endif %}
+                
             </a>
             
         </li>
@@ -50,4 +59,21 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var elements = document.querySelectorAll(".routine-desc");
+  
+      elements.forEach(function(element) {
+        var maxChars = parseInt(element.getAttribute("data-max-chars"), 10);
+        var text = element.textContent;
+  
+        if (text.length > maxChars) {
+          element.textContent = text.slice(0, maxChars) + " ...";
+        }
+      });
+    });
+</script>
 {% endblock %}

@@ -39,8 +39,7 @@ def create_routine(request):
 login_required(login_url='login')
 def routines_list(request):
     template= 'routines_list.html'
-    routines = HairRoutine.objects.all()
-    # routines = HairRoutine.objects.filter(is_draft=False)
+    routines = HairRoutine.objects.filter(is_draft=False)
 
     context = {
         'routines': routines,

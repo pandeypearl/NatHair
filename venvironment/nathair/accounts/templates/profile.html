@@ -168,7 +168,12 @@
         {% for hair_routine in hair_routines %}
         <li>
             <a href="{% url 'routine_detail' hair_routine.id %}">
-                
+                {% if hair_routine.is_draft == False %}
+                <p class="routine-date"><small>Posted {{hair_routine.posted_at}}</small></p>
+                {% elif hair_routine.is_draft == True %}
+                <p class="routine-date"><small>Draft</small></p>
+                {% endif %}
+
                 <div class="user-info">
                     <img src="{{hair_routine.user.profile.profile_pic.url}}" alt="User Profile Picture">
                     <div class="user-name">
@@ -181,13 +186,15 @@
                 </div>
                 
                 <p class="routine-name"><small>{{hair_routine.name}}</small></p>
-                <p><small>{{hair_routine.description}}</small></p>
-
+                <p class="routine-desc" data-max-chars="220"><small>{{hair_routine.description}}</small></p>
+                
                 {% if hair_routine.is_draft == False %}
-                <p class="routine-date"><small>Posted {{hair_routine.posted_at}}</small></p>
-                {% elif hair_routine.is_draft == True %}
-                <p class="routine-date"><small>Draft</small></p>
+                <p class="likes-and-saves">
+                    <small><i class="bi bi-heart"></i> {{hair_routine.likes.count}}</small>
+                    <small><i class="bi bi-folder"></i> {{hair_routine.num_saves}}</small>
+                </p>
                 {% endif %}
+                
             </a>
             
         </li>
@@ -201,3 +208,20 @@
 
 
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var elements = document.querySelectorAll(".routine-desc");
+  
+      elements.forEach(function(element) {
+        var maxChars = parseInt(element.getAttribute("data-max-chars"), 10);
+        var text = element.textContent;
+  
+        if (text.length > maxChars) {
+          element.textContent = text.slice(0, maxChars) + " ...";
+        }
+      });
+    });
+</script>
+{% endblock %}

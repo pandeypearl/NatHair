@@ -15,6 +15,11 @@
         {% for routine in routines %}
         <li>
             <a href="{% url 'routine_detail' routine.id %}">
+                {% if routine.is_draft == False %}
+                <p class="routine-date"><small>Posted {{routine.posted_at}}</small></p>
+                {% elif routine.is_draft == True %}
+                <p class="routine-date"><small>Draft</small></p>
+                {% endif %}
 
                 <div class="user-info">
                     <img src="{{routine.user.profile.profile_pic.url}}" alt="User Profile Picture">
@@ -28,13 +33,15 @@
                 </div>
                 
                 <p class="routine-name"><small>{{routine.name}}</small></p>
-                <p><small>{{routine.description}}</small></p>
+                <p class="routine-desc" data-max-chars="220"><small>{{routine.description}}</small></p>
 
                 {% if routine.is_draft == False %}
-                <p class="routine-date"><small>Posted {{routine.posted_at}}</small></p>
-                {% elif routine.is_draft == True %}
-                <p class="routine-date"><small>Draft</small></p>
+                <p class="likes-and-saves">
+                    <small><i class="bi bi-heart"></i> {{routine.likes.count}}</small>
+                    <small><i class="bi bi-folder"></i> {{routine.num_saves}}</small>
+                </p>
                 {% endif %}
+                
             </a>
             
         </li>
@@ -47,4 +54,21 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var elements = document.querySelectorAll(".routine-desc");
+  
+      elements.forEach(function(element) {
+        var maxChars = parseInt(element.getAttribute("data-max-chars"), 10);
+        var text = element.textContent;
+  
+        if (text.length > maxChars) {
+          element.textContent = text.slice(0, maxChars) + " ...";
+        }
+      });
+    });
+</script>
 {% endblock %}

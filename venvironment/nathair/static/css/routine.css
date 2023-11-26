@@ -56,6 +56,19 @@
     font-weight: 900;
 }
 
+.routines-list li a .routine-desc{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px; 
+    height: 120px;
+}
+
+.routines-list li a .likes-and-saves{
+    display: flex;
+    gap: 20px;
+    color: var(--green);
+}
+
 /* Profile Detail Template */
 .routine-container{
     padding: 50px;
