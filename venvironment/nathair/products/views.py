@@ -15,14 +15,14 @@ from .forms import HairProductReviewForm
 # Create your views here.
 
 # Home Page
-class HomeView(ListView):
-    template_name = 'home.html'
-    model = HairProduct
+# class HomeView(ListView):
+#     template_name = 'home.html'
+#     model = HairProduct
 
-    def get_queryset(self, *args, **kwargs):
-        products = super(HomeView, self).get_queryset(*args, **kwargs)
-        products = products.order_by("-id")
-        return products
+#     def get_queryset(self, *args, **kwargs):
+#         products = super(HomeView, self).get_queryset(*args, **kwargs)
+#         products = products.order_by("-id")
+#         return products
 
 
 @login_required(login_url='login')

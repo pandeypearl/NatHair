@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="routines-wrapper">
-    {% if routines %}
+{% if routines %}
     <ul class="routines-list">
         {% for routine in routines %}
         <li>
@@ -49,7 +49,7 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p class="no-routine-content">You have no saved routines</p>
+    <p class="no-routine-content">There are currently no routines</p>
 {% endif %}
 
 </div>

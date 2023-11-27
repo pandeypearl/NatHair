@@ -7,6 +7,7 @@
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}?{% cache_bust %}">
 <link rel="stylesheet" href="{% static 'css/products.css' %}?{% cache_bust %}">
+<link rel="stylesheet" href="{% static 'css/routine.css' %}?{% cache_bust %}">
 {% endblock styles %}
 
 {% block content %}
@@ -14,10 +15,10 @@
 <header style="background-image: url('{% static 'img/nathair-3.jpg' %}');">
     
     <div class="home-text">
-        <h1>Start your hair journey with us.</h1>
+        <h1>Your healthy hair journey starts right now.</h1>
 
         {% if user.is_authenticated %}
-        <a class="start-btn" href="">take quiz</a>
+        <a class="start-btn" href="{% url 'create_routine' %}">create a routine</a>
         {% else %}
         <a class="start-btn" href="{% url 'signup' %}">create profile</a>
         {% endif %}
@@ -25,28 +26,93 @@
     
 </header>
 
-<section class="products">
-    
-    <ul class="product-list">
-        {% for object in object_list %}
-        <li>
-            <span class="product-img">
-                <img src="{{ object.image }}" alt="{{ object.title }}">
-            </span>
+{% include 'search-bar.html' %}
 
-            <span class="product-info">
-                <p class="title">{{ object.title }}</p>
-                <small class="brand">{{ object.brand }}</small>
-                <a class ="product-btn" href="{% url 'product_detail' object.id %}">view product</a>
-            </span>
+<div class="content-wrapper">
+    <div class="product-section">
+        <div class="product-list">
+            {% for product in products %}
+            <a href="{% url 'product_detail' product.id %}" class="product-item">
+                <div class="product-info">
+                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                    <div>
+                        <p class="title">{{ product.title }}</p>
+                        <small class="brand">{{ product.brand }}</small>
+                        
+                        <div class="analytics">
+                            <small>
+                                {% for star in "12345" %}
+                                {% with forloop.counter as counter %}
+                                    {% if counter <= product.average_rating|default:0 %}
+                                        {% if counter == product.average_rating|default:0 %}
+                                            <i class="bi bi-star-half"></i>
+                                        {% else %}
+                                            <i class="bi bi-star-fill"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <i class="bi bi-star"></i>
+                                    {% endif %}
+                                {% endwith %}
+                                {% endfor %}
+                            </small>
+                        
+                            <small class="saves"><i class="bi bi-folder"></i> {{product.num_saves}}</small>
+                        </div>
+                        
+                    </div>
+                </div>
+        
+            </a>
+            {% empty %}
+            <p> There are currently no products</p>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+    <div class="routine-wrapper">
+        {% if routines %}
+        <ul class="routines-list">
+            {% for routine in routines %}
+            <li>
+                <a href="{% url 'routine_detail' routine.id %}">
+                    {% if routine.is_draft == False %}
+                    <p class="routine-date"><small>Posted {{routine.posted_at}}</small></p>
+                    {% elif routine.is_draft == True %}
+                    <p class="routine-date"><small>Draft</small></p>
+                    {% endif %}
 
+                    <div class="user-info">
+                        <img src="{{routine.user.profile.profile_pic.url}}" alt="User Profile Picture">
+                        <div class="user-name">
+                            {% if routine.user.profile.full_name %}
+                            <p><small>{{routine.user.profile.full_name}}</small></p>
+                            {% endif %}
+                            <p><small>@{{routine.user.username}}</small></p>
+                        </div>
+                        
+                    </div>
+                    
+                    <p class="routine-name"><small>{{routine.name}}</small></p>
+                    <p class="routine-desc" data-max-chars="220"><small>{{routine.description}}</small></p>
+
+                    {% if routine.is_draft == False %}
+                    <p class="likes-and-saves">
+                        <small><i class="bi bi-heart"></i> {{routine.likes.count}}</small>
+                        <small><i class="bi bi-folder"></i> {{routine.num_saves}}</small>
+                    </p>
+                    {% endif %}
+                    
+                </a>
+                
             </li>
-        {% empty %}
-        <li>There are currently no products</li>
+            
         {% endfor %}
-    </ul>
+        </ul>
+        {% else %}
+        <p class="no-routine-content">There are currently no routines</p>
+        {% endif %}
+    </div>
     
-
-</section>
+</div>
 
 {% endblock content %}

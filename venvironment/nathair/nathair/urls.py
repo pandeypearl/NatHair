@@ -19,14 +19,14 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView, ListView
-from products.views import HomeView
+from accounts.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Landing Page
     path('', TemplateView.as_view(template_name='landing-page.html'), name='landing-page'),
     # Home
-    path('home', HomeView.as_view(), name='home'),
+    path('home', home, name='home'),
     path('accounts/', include('accounts.urls')),
     path('products/', include('products.urls')),
     path('routines/', include('routines.urls')),

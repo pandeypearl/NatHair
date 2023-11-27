@@ -16,12 +16,15 @@ from .forms import LoginForm, SignupForm, ProfileForm, HairProfileForm, TextureP
 login_required(login_url='login')
 def home(request):
     template = 'home.html'
+    products = HairProduct.objects.all()
+    routines = HairRoutine.objects.filter(is_draft=False)
 
-    context = {}
+    context = {
+        'products': products,
+        'routines': routines,
+    }
 
     return render(request, template, context)
-
-
 
 def signup(request):
     ''' User sign up view '''

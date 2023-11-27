@@ -9,14 +9,15 @@ header{
 }
 
 .home-text{
-    width: 30%;
+    width: 38vw;
+    text-align: center;
 }
 
 .home-text h1{
     color: white;
     font-size: 4rem;
     font-weight: 900;
-    text-shadow: var(--shadow-1);
+    text-shadow: var(--shadow-2);
 }
 
 .products{
@@ -36,3 +37,26 @@ header{
     font-size: 1.2rem;
 }
 
+.content-wrapper{
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 0;
+}
+
+.content-wrapper hr{
+    border:none;
+    border-right: 1px solid var(--green);
+    opacity: 0.5;
+}
+
+.product-section{
+    padding: 17px 30px 30px 30px;
+    max-height: 100vh;
+    overflow-y:scroll; 
+}
+
+.routine-section{
+    padding: 0 30px 30px 30px;
+    max-height: 100vh;
+    overflow-y:scroll; 
+}
