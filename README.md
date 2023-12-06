@@ -1,12 +1,27 @@
 # NatHair
-This is my ALX/Holberton School Portfolio Project which aims to help people with their natural hair journey.
 
 <img src="img/NatHair-Home.png">
 
+## NatHair: Your Hair, Your Community
+Embark on a unique journey with NatHair, a revolutionary social media platform meticulously crafted as the culmination of my ALX/Holberton School Full Stack Programming course.
 
-A few years ago, I had myself started my own natural hair journey, and initially I didn't realize what a daunting task it would be. I did not know anything about hair typing, what “hair porosity” meant and how important it would be, and most importantly, I had no idea what kind of products I needed in order to build my own hair regimen. This led me to waste a lot of time and money because I was using a very frustrating method called trial and error. I had absolutely no idea what I was doing and this led me to lose confidence in my decision to go natural. This experience is what led to the idea of NatHair. I decided to do my portfolio project about something that would have helped me in the past, and could possibly help those in a similar as not worked for you, allowing you to help out your fellow naturals.situation presently and in the future.
+### Description:
+NatHair is not just a platform; it's a vibrant community where individuals with similar hair types converge to share experiences, routines, and product recommendations. Immerse yourself in a space tailor-made for hair enthusiasts seeking connection and inspiration.
 
-<hr>
+### Features:
++ <b>Authentic Connections:</b> Seamless user authentication for a personalized experience.
++ <b>Empowering Routines:</b> Create, like, comment on, and save personalized haircare routines.
++ <b>Product Explorer:</b> Like, save, rate, and discover new products through a dynamic interface.
++ <b>Social Dynamics:</b> Follow and un-follow fellow users, fostering a sense of community and engagement.
+
+### Project Stack:
++ Backend:  Python, Django, Node.js
++ Frontend: JavaScript, HTML5, CSS3
+
+<br>
+
+Join NatHair and redefine your haircare journey in a space that celebrates the diversity and beauty of every strand!
+
 
 ## Project Links
 ### Deployed Site
@@ -22,25 +37,15 @@ A few years ago, I had myself started my own natural hair journey, and initially
 ### Project API Repository
 <a href="">https://github.com/pandeypearl/NatHairAPI</a>
 
-<hr>
 
-The outcome of this idea is a web application that helps you identify every aspect of your hair and its current condition, recommends the best possible products specific to you and your personal hair issues, and provides a community space to share what has and has not worked for you, allowing you to help out your fellow naturals.
+## License
+MIT License
 
-### Author
+## Contact
+Please feel free to contact me if you have questions or feedback
+
 Pretty Pandey <br>
-Full Stack Development
+Full Stack Programmer<br>
+prettypandeypearl@gmail.com
 <a href="https://www.linkedin.com/in/prettypandey"><br>LinkedIn</a>
-
-<hr>
-
-## Installation to get started with NatHair
-This project is developed using Django 4.4.2
-
-1. Clone repository from GutHub <br>
-https://github.com/pandeypearl/NatHair
-2. Install dependencies using pip install<br>
-    Dependencies can be found in requirements.txt
-3. Start server using python manage.py: <br>
-run this command in source folder  NatHair/venvironemnt/nathair
-
-&copy; ALX 2023git
+<a href="https://www.prettypandey.tech"><br>Portfolio</a>
